@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency 'React-Core'
-  s.dependency 'PasswordChangerSDK', '~> 0.1.4'
+  s.dependency 'CardOnFileSwitcher', '~> 0.1.8'
 end
 
