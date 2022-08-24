@@ -18,18 +18,19 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSString *)sessionId)
         self.presentingViewController = RCTPresentedViewController();
         CardOnFileSwitcherViewController *vc = [[CardOnFileSwitcherViewController alloc] initWithSessionId:sessionId];
         [vc setOnSuccessOnSuccess:^(NSString * merchant) {
-            NSLog(@"this is error: %@", merchant);
+            [self sendEventWithName:@"onSuccess" body:@{@"merchant": merchant}];
         }];
         [vc setOnErrorOnError:^(NSString *error, NSString *message) {
-            NSLog(@"this is error: %@", error);
-            NSLog(@"this is message: %@", message);
+            [self sendEventWithName:@"onError" body:@{@"errorCode": error, @"errorMessage": message }];
         }];
-        [vc setOnEventOnEvent:^(NSString *event, NSString *message) {
-            NSLog(@"this is event: %@", event);
-            NSLog(@"this is message: %@", message);
+        [vc setOnEventOnEvent:^(NSString *event, NSString *merchant) {
+            [self sendEventWithName:@"onEvent" body:@{@"event": event, @"merchant": merchant}];
         }];
         [vc setOnExitOnExit:^{
-            NSLog(@"this is exit");
+            [self sendEventWithName:@"onExit" body:nil];
+        }];
+        [vc setOnFinishedOnFinished:^{
+            [self sendEventWithName:@"onFinished" body:nil];
         }];
         [self.presentingViewController presentViewController:vc animated:NO completion:nil];
 
