@@ -15,6 +15,7 @@ jobs:
           node-version: 14
           # Setup .npmrc file to publish to GitHub Packages
           registry-url: 'https://npm.pkg.github.com'
+          scope: '@millionscard'
           # Defaults to the user or organization that owns the workflow file
       - run: npm install
       - run: npm publish
