@@ -37,4 +37,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSString *)sessionId)
     });
 }
 
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[@"onSuccess", @"onError", @"onEvent", @"onExit", @"onFinished"];
+}
+
 @end
