@@ -19,8 +19,13 @@ import com.facebook.react.bridge.BaseActivityEventListener;
 
 import com.knotapi.cardonfileswitcher.CardOnFileSwitcher;
 import com.knotapi.cardonfileswitcher.OnSessionEventListener;
-import com.knotapi.cardonfileswitcher.model.CreateSessionParameters;
+
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.json.JSONArray;
+import org.json.JSONException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class KnotapiModule extends ReactContextBaseJavaModule {
 
@@ -38,14 +43,8 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
 
     private final OnSessionEventListener onSessionEventListener = new OnSessionEventListener() {
         @Override
-        public void onUserCreated(String knotAccessToken, String client_id, String secret) {
-            Log.d("knotAccessToken", knotAccessToken);
-            createSession(knotAccessToken, client_id, secret);
-        }
-
-        @Override
-        public void onSessionCreated(String sessionId) {
-            cardOnFileSwitcher.openCardOnFileSwitcher(sessionId);
+        public void onInvalidSession(String sessionId, String errorMessage) {
+            Log.d("onInvalidSession", errorMessage);
         }
 
         @Override
@@ -85,18 +84,22 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void openCardSwitcher(String params) {
-        cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
-        cardOnFileSwitcher.init(context);
-        cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
-        cardOnFileSwitcher.createUser(onSessionEventListener, params);
-    }
-
-    public void createSession(String knotAccessToken, String client_id, String secret) {
-        CreateSessionParameters createSessionParameters = new CreateSessionParameters(client_id, secret, knotAccessToken);
-        Gson gson = new Gson();
-        String params = gson.toJson(createSessionParameters);
-        cardOnFileSwitcher.createSession(onSessionEventListener, params);
+    public void openCardSwitcher(String sessionId, String merchants) {
+        try {
+            cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
+            cardOnFileSwitcher.init(context);
+            cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
+            // convert string merchants to array of merchants
+            Gson converter = new Gson();
+            Type type = new TypeToken<List<Integer>>(){}.getType();
+            JSONArray jsonArray = new JSONArray(merchants);
+            List<Integer> list =  converter.fromJson(jsonArray.toString(), type);
+            int[] merchantsArr = list.stream().mapToInt(Integer::intValue).toArray();
+            //                
+            cardOnFileSwitcher.openCardOnFileSwitcher(onSessionEventListener, sessionId, merchantsArr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }
