@@ -7,7 +7,7 @@
 #import "RCTBridgeModule.h"
 #import "RCTEventEmitter.h"
 #endif
-
-@interface Knotapi : RCTEventEmitter <RCTBridgeModule>
+#import "CardOnFileSwitcher/CardOnFileSwitcher-Swift.h"
+@interface Knotapi : RCTEventEmitter <RCTBridgeModule, CardOnFileDelegate>
 
 @end

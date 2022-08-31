@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency 'React-Core'
-  s.dependency 'CardOnFileSwitcher', '~> 0.1.9'
+  s.dependency 'CardOnFileSwitcher', '~> 0.1.12'
 end
 

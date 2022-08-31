@@ -12,34 +12,37 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(openCardSwitcher:(NSString *)sessionId)
-{
+RCT_EXPORT_METHOD(openCardSwitcher:(NSString *)sessionId merchants: (NSArray<NSNumber *> * _Nonnull)merchants){
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.presentingViewController = RCTPresentedViewController();
-        CardOnFileSwitcherViewController *vc = [[CardOnFileSwitcherViewController alloc] initWithSessionId:sessionId];
-        [vc setOnSuccessOnSuccess:^(NSString * merchant) {
-            [self sendEventWithName:@"onSuccess" body:@{@"merchant": merchant}];
-        }];
-        [vc setOnErrorOnError:^(NSString *error, NSString *message) {
-            [self sendEventWithName:@"onError" body:@{@"errorCode": error, @"errorMessage": message }];
-        }];
-        [vc setOnEventOnEvent:^(NSString *event, NSString *merchant) {
-            [self sendEventWithName:@"onEvent" body:@{@"event": event, @"merchant": merchant}];
-        }];
-        [vc setOnExitOnExit:^{
-            [self sendEventWithName:@"onExit" body:nil];
-        }];
-        [vc setOnFinishedOnFinished:^{
-            [self sendEventWithName:@"onFinished" body:nil];
-        }];
-        [self.presentingViewController presentViewController:vc animated:NO completion:nil];
-
+        CardOnFileSwitcherSession * session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId];
+        [session setDelegateWithDelegate:self];
+        [session openOnCardFileSwitcherWithMerchants:merchants];
     });
 }
 
 - (NSArray<NSString *> *)supportedEvents
 {
     return @[@"onSuccess", @"onError", @"onEvent", @"onExit", @"onFinished"];
+}
+
+- (void)onSuccessWithMerchant:(NSString *)merchant{
+    [self sendEventWithName:@"onSuccess" body:@{@"merchant": merchant}];
+}
+
+- (void)onEventWithEvent:(NSString *)event message:(NSString *)message{
+    [self sendEventWithName:@"onEvent" body:@{@"event": event, @"merchant": message}];
+}
+
+- (void)onErrorWithError:(NSString *)error message:(NSString *)message{
+    [self sendEventWithName:@"onError" body:@{@"errorCode": error, @"errorMessage": message }];
+}
+
+- (void)onExit{
+    [self sendEventWithName:@"onExit" body:nil];
+}
+
+- (void)onFinished{
+    [self sendEventWithName:@"onFinished" body:nil];
 }
 
 @end
