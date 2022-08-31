@@ -2,11 +2,15 @@
 
 ## Getting started
 
-`$ npm install react-native-knotapi --save`
+`$ npm install @millionscard/react-native-knotapi --save`
+
+or 
+
+`$ yarn add @millionscard/react-native-knotapi`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-knotapi`
+`$ react-native link @millionscard/react-native-knotapi`
 
 ## Usage
 ```javascript
