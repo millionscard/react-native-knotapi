@@ -84,19 +84,18 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void openCardSwitcher(String sessionId, String merchants) {
+    public void openCardSwitcher(String sessionId, String merchants, Boolean isCancel, String customization) {
         try {
             cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
-            cardOnFileSwitcher.init(context);
-            cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
+            cardOnFileSwitcher.init(context, onSessionEventListener, customization);
             // convert string merchants to array of merchants
             Gson converter = new Gson();
             Type type = new TypeToken<List<Integer>>(){}.getType();
             JSONArray jsonArray = new JSONArray(merchants);
             List<Integer> list =  converter.fromJson(jsonArray.toString(), type);
             int[] merchantsArr = list.stream().mapToInt(Integer::intValue).toArray();
-            //                
-            cardOnFileSwitcher.openCardOnFileSwitcher(onSessionEventListener, sessionId, merchantsArr);
+            //
+            cardOnFileSwitcher.openCardOnFileSwitcher(sessionId, merchantsArr, isCancel);
         } catch (JSONException e) {
             e.printStackTrace();
         }

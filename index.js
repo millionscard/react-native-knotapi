@@ -12,8 +12,8 @@ export const eventNames = {
 const { Knotapi } = NativeModules;
 const eventEmitter = new NativeEventEmitter(Knotapi)
 
-const open = async (sessionId, merchants) => {
-    return Knotapi?.openCardSwitcher(sessionId, merchants);
+const open = async (sessionId, merchants, isCancel, customization) => {
+    return Knotapi?.openCardSwitcher(sessionId, merchants, isCancel, customization);
 }
 
 const addListener = (eventName, callback) => {
