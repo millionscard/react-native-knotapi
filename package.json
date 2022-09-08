@@ -1,7 +1,7 @@
 {
   "name": "@millionscard/react-native-knotapi",
   "title": "React Native Knotapi",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "TODO",
   "main": "index.js",
   "files": [
@@ -20,7 +20,8 @@
     "baseUrl": "https://github.com/github_account/react-native-knotapi"
   },
   "keywords": [
-    "react-native", "knotapi"
+    "react-native",
+    "knotapi"
   ],
   "author": {
     "name": "Millions",
