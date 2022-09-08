@@ -2,7 +2,7 @@
 
 #import "Knotapi.h"
 #import <React/RCTConvert.h>
-@import CardOnFileSwitcher;
+@import KnotAPI;
 
 @interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
