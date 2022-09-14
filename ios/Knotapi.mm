@@ -18,9 +18,13 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSArray<NSNumber*> *merchants = [params objectForKey:@"merchants"];
       NSDictionary *customization = [params objectForKey:@"customization"];
       NSString *companyName = [customization objectForKey:@"companyName"];
+      NSString *textColor = [customization objectForKey:@"textColor"];
+      NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId];
       [session setDelegateWithDelegate:self];
       [session setCompanyNameWithCompanyName:companyName];
+      [session setTextColorWithTextColor:textColor];
+      [session setPrimaryColorWithPrimaryColor:primaryColor];
       NSLog(@"merchants: %@",merchants);
       NSLog(@"companyName %@",companyName);
       NSLog(@"customization %@",customization);

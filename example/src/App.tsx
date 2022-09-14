@@ -9,14 +9,18 @@ export default function App() {
         void openCardOnFileSwitcher({
             sessionId: "e64b25c2-d307-41bf-abc1-d3dd1803e2f2",
             merchants: [1, 2, 3],
-            customization: {companyName: "Millions"}
+            customization: {
+                companyName: "Millions",
+                primaryColor: "#5b138c",
+                textColor: "#7b5a91"
+            }
         })
     }
 
     return (
         <View style={styles.container}>
             <Pressable onPress={handleOpenCardSwitcher} style={styles.button}>
-                <Text style={styles.textButton}>Open Knotapi</Text>
+                <Text style={styles.textButton}>Open Card on file switcher</Text>
             </Pressable>
         </View>
     );
