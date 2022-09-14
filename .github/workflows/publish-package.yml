@@ -25,6 +25,8 @@ jobs:
 
       - name: npm publish
         run: |
+          git config --global user.email "taitmbarek@gmail.com"
+          git config --global user.name "TARIK AIT MBAREK"
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           npm run release
         env:
