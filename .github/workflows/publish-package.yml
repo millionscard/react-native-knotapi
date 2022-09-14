@@ -24,7 +24,7 @@ jobs:
         run: npm run prepare
 
       - name: npm publish
-        run:
+        run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           npm run release
         env:
