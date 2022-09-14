@@ -33,7 +33,9 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "knot",
+    "knotapi"
   ],
   "repository": "https://github.com/millionscard/react-native-knotapi",
   "author": "KnotAPI <taitmbarek@gmail.com> (https://www.knotapi.com)",
