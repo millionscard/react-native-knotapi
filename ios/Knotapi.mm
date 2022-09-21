@@ -20,7 +20,12 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *companyName = [customization objectForKey:@"companyName"];
       NSString *textColor = [customization objectForKey:@"textColor"];
       NSString *primaryColor = [customization objectForKey:@"primaryColor"];
-      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId];
+      NSString *environmentString = [params objectForKey:@"environment"];
+      Environment environment = EnvironmentProduction;
+      if ([environmentString isEqualToString:@"sandbox"]) {
+          environment = EnvironmentSandbox;
+      }
+      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId environment:environment];
       [session setDelegateWithDelegate:self];
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];
