@@ -1,14 +1,10 @@
 package com.reactnativeknotapi;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.facebook.react.bridge.ActivityEventListener;
-import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -16,10 +12,9 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.knotapi.cardonfileswitcher.CardOnFileSwitcher;
+import com.knotapi.cardonfileswitcher.Environment;
 import com.knotapi.cardonfileswitcher.OnSessionEventListener;
 import com.knotapi.cardonfileswitcher.model.Customization;
-
-import java.util.ArrayList;
 
 @ReactModule(name = KnotapiModule.NAME)
 public class KnotapiModule extends ReactContextBaseJavaModule {
@@ -38,15 +33,6 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     return NAME;
   }
 
-
-
-  private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
-    @Override
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-      super.onActivityResult(activity, requestCode, resultCode, data);
-      Log.d("onActivityResult", requestCode + " " + resultCode);
-    }
-  };
 
   private final OnSessionEventListener onSessionEventListener = new OnSessionEventListener() {
     @Override
@@ -92,7 +78,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     }
     // handle customization object
     Customization customizationObj = new Customization();
-    int[] merchantsArr = new int[0];
+    int[] merchantsArr;
     if (params.hasKey("customization")) {
       ReadableMap customization = params.getMap("customization");
       customizationObj.setPrimaryColor(customization.getString("primaryColor"));
@@ -102,15 +88,26 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     if (params.hasKey("merchants")) {
       ReadableArray merchants = params.getArray("merchants");
       // convert ReadableArray merchants to array of int
-      ArrayList<Integer> arrayList = new ArrayList<>();
+      merchantsArr = new int[merchants.size()];
       for (int i = 0; i < merchants.size(); i++) {
-        int item = merchants.getInt(i);
-        arrayList.add(item);
+        merchantsArr[i] = merchants.getInt(i);
       }
-      merchantsArr = arrayList.stream().mapToInt(Integer::intValue).toArray();
+    } else {
+      merchantsArr = new int[]{};
     }
     cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
-    cardOnFileSwitcher.init(context, onSessionEventListener, customizationObj);
+    if (params.hasKey("environment")) {
+      String environment = params.getString("environment");
+      if (environment.equals("sandbox")) {
+        cardOnFileSwitcher.init(context, Environment.SANDBOX);
+      } else {
+        cardOnFileSwitcher.init(context, Environment.PRODUCTION);
+      }
+    } else {
+      cardOnFileSwitcher.init(context, Environment.PRODUCTION);
+    }
+    cardOnFileSwitcher.setCustomization(customizationObj);
+    cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
     cardOnFileSwitcher.openCardOnFileSwitcher(sessionId, merchantsArr, isCancel);
   }
 

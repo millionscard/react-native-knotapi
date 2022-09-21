@@ -8,7 +8,7 @@ export default function App() {
     const handleOpenCardSwitcher = () => {
         void openCardOnFileSwitcher({
             sessionId: "e64b25c2-d307-41bf-abc1-d3dd1803e2f2",
-            environment: "sandbox",
+            environment: "production",
             merchants: [1, 2, 3],
             customization: {
                 companyName: "Millions",
