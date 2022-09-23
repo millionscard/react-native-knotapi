@@ -15,6 +15,7 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
       NSString *sessionId = [params objectForKey:@"sessionId"];
+      NSString *clientId = [params objectForKey:@"clientId"];
       NSArray<NSNumber*> *merchants = [params objectForKey:@"merchants"];
       NSDictionary *customization = [params objectForKey:@"customization"];
       NSString *companyName = [customization objectForKey:@"companyName"];
@@ -25,7 +26,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
       }
-      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId environment:environment];
+      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
       [session setDelegateWithDelegate:self];
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];

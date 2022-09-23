@@ -72,6 +72,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void openCardSwitcher(ReadableMap params) {
     String sessionId = params.getString("sessionId");
+    String clientId = params.getString("clientId");
     boolean isCancel = false;
     if (params.hasKey("isCancel")){
       isCancel = params.getBoolean("isCancel");
@@ -99,12 +100,12 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     if (params.hasKey("environment")) {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
-        cardOnFileSwitcher.init(context, Environment.SANDBOX);
+        cardOnFileSwitcher.init(context, clientId, Environment.SANDBOX);
       } else {
-        cardOnFileSwitcher.init(context, Environment.PRODUCTION);
+        cardOnFileSwitcher.init(context, clientId, Environment.PRODUCTION);
       }
     } else {
-      cardOnFileSwitcher.init(context, Environment.PRODUCTION);
+      cardOnFileSwitcher.init(context, clientId, Environment.PRODUCTION);
     }
     cardOnFileSwitcher.setCustomization(customizationObj);
     cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);

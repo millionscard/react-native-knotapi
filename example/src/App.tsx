@@ -7,13 +7,14 @@ export default function App() {
 
     const handleOpenCardSwitcher = () => {
         void openCardOnFileSwitcher({
-            sessionId: "16ca25d6-d687-4a67-88c3-91a4cb3bbbff",
-            environment: "production",
+            sessionId: "9c361eed-f86c-4db7-8adb-92caca93f8d9",
+            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
+            environment: "sandbox",
             merchants: [1, 2, 3],
             customization: {
                 companyName: "Millions",
                 primaryColor: "#5b138c",
-                textColor: "#7b5a91"
+                textColor: "#e0e0e0"
             }
         })
     }
