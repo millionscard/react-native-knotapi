@@ -30,9 +30,14 @@ type CustomizationType = {
     textColor?: string
     companyName?: string
 }
-type CardOnFileSwitcherParams = { sessionId: string, clientId: string, merchants?: number[], isCancel?: boolean, customization: CustomizationType, environment: 'production' | 'sandbox' }
+type CardOnFileSwitcherParams = { sessionId: string, clientId: string, merchants?: number[], customization: CustomizationType, environment: 'production' | 'sandbox' }
+type SubscriptionCancelerParams = { sessionId: string, customization: CustomizationType }
 export const openCardOnFileSwitcher = async (params: CardOnFileSwitcherParams) => {
     return Knotapi?.openCardSwitcher(params);
+}
+
+export const openSubscriptionCanceler = async (params: SubscriptionCancelerParams) => {
+    return Knotapi?.openSubscriptionCanceler(params);
 }
 
 type EventNames = keyof typeof eventNames

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {Pressable, StyleSheet, View, Text} from 'react-native';
-import {openCardOnFileSwitcher} from 'react-native-knotapi';
+import {openCardOnFileSwitcher, openSubscriptionCanceler} from 'react-native-knotapi';
 
 export default function App() {
 
@@ -18,11 +18,24 @@ export default function App() {
             }
         })
     }
+const handleOpenSubscriptionCanceler = () => {
+        void openSubscriptionCanceler({
+            sessionId: "9c361eed-f86c-4db7-8adb-92caca93f8d9",
+            customization: {
+                companyName: "Millions",
+                primaryColor: "#5b138c",
+                textColor: "#e0e0e0"
+            }
+        })
+    }
 
     return (
         <View style={styles.container}>
             <Pressable onPress={handleOpenCardSwitcher} style={styles.button}>
                 <Text style={styles.textButton}>Open Card on file switcher</Text>
+            </Pressable>
+            <Pressable onPress={handleOpenSubscriptionCanceler} style={styles.button}>
+                <Text style={styles.textButton}>Open Subscription canceler</Text>
             </Pressable>
         </View>
     );
@@ -47,5 +60,6 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'black',
         padding: 16,
+        marginVertical: 8,
     }
 });

@@ -38,6 +38,22 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   });
 }
 
+RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
+  dispatch_async(dispatch_get_main_queue(), ^{
+      NSString *sessionId = [params objectForKey:@"sessionId"];
+      NSDictionary *customization = [params objectForKey:@"customization"];
+      NSString *companyName = [customization objectForKey:@"companyName"];
+      NSString *textColor = [customization objectForKey:@"textColor"];
+      NSString *primaryColor = [customization objectForKey:@"primaryColor"];
+      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:@"" environment:EnvironmentSandbox];
+      [session setDelegateWithDelegate:self];
+      [session setCompanyNameWithCompanyName:companyName];
+      [session setTextColorWithTextColor:textColor];
+      [session setPrimaryColorWithPrimaryColor:primaryColor];
+      [session openOnSubscriptionCancelerWithMerchants:@[]];
+  });
+}
+
 - (NSArray<NSString *> *)supportedEvents
 {
   return @[@"onSuccess", @"onError", @"onEvent", @"onExit", @"onFinished"];
