@@ -14,17 +14,19 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.knotapi.cardonfileswitcher.CardOnFileSwitcher;
 import com.knotapi.cardonfileswitcher.Environment;
 import com.knotapi.cardonfileswitcher.OnSessionEventListener;
+import com.knotapi.cardonfileswitcher.SubscriptionCanceler;
 import com.knotapi.cardonfileswitcher.model.Customization;
 
 @ReactModule(name = KnotapiModule.NAME)
 public class KnotapiModule extends ReactContextBaseJavaModule {
   public static final String NAME = "Knotapi";
   CardOnFileSwitcher cardOnFileSwitcher;
+  SubscriptionCanceler subscriptionCanceler;
   Context context;
 
   public KnotapiModule(ReactApplicationContext reactContext) {
     super(reactContext);
-    context = (Context) reactContext;
+    context = reactContext;
   }
 
   @Override
@@ -73,11 +75,6 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   public void openCardSwitcher(ReadableMap params) {
     String sessionId = params.getString("sessionId");
     String clientId = params.getString("clientId");
-    boolean isCancel = false;
-    if (params.hasKey("isCancel")){
-      isCancel = params.getBoolean("isCancel");
-    }
-    // handle customization object
     Customization customizationObj = new Customization();
     int[] merchantsArr;
     if (params.hasKey("customization")) {
@@ -109,7 +106,24 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     }
     cardOnFileSwitcher.setCustomization(customizationObj);
     cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
-    cardOnFileSwitcher.openCardOnFileSwitcher(sessionId, merchantsArr, isCancel);
+    cardOnFileSwitcher.openCardOnFileSwitcher(sessionId, merchantsArr);
+  }
+
+  @ReactMethod
+  public void openSubscriptionCanceler(ReadableMap params) {
+    String sessionId = params.getString("sessionId");
+    Customization customizationObj = new Customization();
+    if (params.hasKey("customization")) {
+      ReadableMap customization = params.getMap("customization");
+      customizationObj.setPrimaryColor(customization.getString("primaryColor"));
+      customizationObj.setTextColor(customization.getString("textColor"));
+      customizationObj.setCompanyName(customization.getString("companyName"));
+    }
+    subscriptionCanceler = subscriptionCanceler.getInstance();
+    subscriptionCanceler.init(context, "", Environment.PRODUCTION);
+    subscriptionCanceler.setCustomization(customizationObj);
+    subscriptionCanceler.setOnSessionEventListener(onSessionEventListener);
+    subscriptionCanceler.openCardOnFileSwitcher(sessionId);
   }
 
 }
