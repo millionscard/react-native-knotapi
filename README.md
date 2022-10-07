@@ -9,12 +9,13 @@ npm install react-native-knotapi
 ## Usage
 
 ```js
-import { multiply } from "react-native-knotapi";
+import { openCardOnFileSwitcher, addListener, eventNames } from "react-native-knotapi";
 
 // ...
 
-const result = await multiply(3, 7);
-```
+openCardOnFileSwitcher({
+  sessionId: SESSION_ID, clientId: CLIENT_ID, customization: {companyName: COMPANY_NAME})
+  ```
 
 ## Contributing
 
