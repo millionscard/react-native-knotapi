@@ -41,14 +41,25 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
 RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
       NSString *sessionId = [params objectForKey:@"sessionId"];
+      NSString *clientId = [params objectForKey:@"clientId"];
       NSDictionary *customization = [params objectForKey:@"customization"];
       NSString *companyName = [customization objectForKey:@"companyName"];
       NSString *textColor = [customization objectForKey:@"textColor"];
       NSString *primaryColor = [customization objectForKey:@"primaryColor"];
-      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:@"" environment:EnvironmentSandbox];
+      NSString *environmentString = [params objectForKey:@"environment"];
+      Environment environment = EnvironmentProduction;
+      if ([environmentString isEqualToString:@"sandbox"]) {
+          environment = EnvironmentSandbox;
+      }
+      
+      bool amount = false;
+      amount = [[params objectForKey:@"amount"] boolValue];
+      
+      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
       [session setDelegateWithDelegate:self];
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];
+      [session setAmountWithAmount:amount];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
       [session openOnSubscriptionCancelerWithMerchants:@[]];
   });
