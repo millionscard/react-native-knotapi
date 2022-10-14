@@ -31,7 +31,7 @@ type CustomizationType = {
     companyName?: string
 }
 type CardOnFileSwitcherParams = { sessionId: string, clientId: string, merchants?: number[], customization: CustomizationType, environment: 'production' | 'sandbox' }
-type SubscriptionCancelerParams = { sessionId: string, customization: CustomizationType }
+type SubscriptionCancelerParams = { sessionId: string, clientId: string, amount?: boolean, customization: CustomizationType, environment: 'production' | 'sandbox' }
 export const openCardOnFileSwitcher = async (params: CardOnFileSwitcherParams) => {
     return Knotapi?.openCardSwitcher(params);
 }

@@ -38,11 +38,6 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
 
   private final OnSessionEventListener onSessionEventListener = new OnSessionEventListener() {
     @Override
-    public void onInvalidSession(String sessionId, String errorMessage) {
-      Log.d("onInvalidSession", errorMessage);
-    }
-
-    @Override
     public void onSuccess(String merchant) {
       Log.d("onSuccess from main", merchant);
     }
@@ -97,21 +92,26 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     if (params.hasKey("environment")) {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
-        cardOnFileSwitcher.init(context, clientId, Environment.SANDBOX);
+        cardOnFileSwitcher.init(context, sessionId, clientId, Environment.SANDBOX);
       } else {
-        cardOnFileSwitcher.init(context, clientId, Environment.PRODUCTION);
+        cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
       }
     } else {
-      cardOnFileSwitcher.init(context, clientId, Environment.PRODUCTION);
+      cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
     }
     cardOnFileSwitcher.setCustomization(customizationObj);
     cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
-    cardOnFileSwitcher.openCardOnFileSwitcher(sessionId, merchantsArr);
+    cardOnFileSwitcher.openCardOnFileSwitcher(merchantsArr);
   }
 
   @ReactMethod
   public void openSubscriptionCanceler(ReadableMap params) {
     String sessionId = params.getString("sessionId");
+    String clientId = params.getString("clientId");
+    boolean amount = false;
+    if (params.hasKey("amount")) {
+      amount = params.getBoolean("amount");
+    }
     Customization customizationObj = new Customization();
     if (params.hasKey("customization")) {
       ReadableMap customization = params.getMap("customization");
@@ -120,10 +120,19 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       customizationObj.setCompanyName(customization.getString("companyName"));
     }
     subscriptionCanceler = subscriptionCanceler.getInstance();
-    subscriptionCanceler.init(context, "", Environment.PRODUCTION);
+    if (params.hasKey("environment")) {
+      String environment = params.getString("environment");
+      if (environment.equals("sandbox")) {
+        subscriptionCanceler.init(context, sessionId, clientId, Environment.SANDBOX);
+      } else {
+        subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
+      }
+    } else {
+      subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
+    }
     subscriptionCanceler.setCustomization(customizationObj);
     subscriptionCanceler.setOnSessionEventListener(onSessionEventListener);
-    subscriptionCanceler.openCardOnFileSwitcher(sessionId);
+    subscriptionCanceler.openSubscriptionCanceller(amount);
   }
 
 }
