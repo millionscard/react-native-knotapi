@@ -20,7 +20,10 @@ export default function App() {
     }
 const handleOpenSubscriptionCanceler = () => {
         void openSubscriptionCanceler({
-            sessionId: "9c361eed-f86c-4db7-8adb-92caca93f8d9",
+            sessionId: "1c0a49cd-a28a-4c96-9ade-854eee575613",
+            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
+            environment: "production",
+            amount: true,
             customization: {
                 companyName: "Millions",
                 primaryColor: "#5b138c",
