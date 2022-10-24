@@ -34,7 +34,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSLog(@"merchants: %@",merchants);
       NSLog(@"companyName %@",companyName);
       NSLog(@"customization %@",customization);
-      [session openOnCardFileSwitcherWithMerchants:merchants];
+      [session openCardOnFileSwitcherWithMerchants:merchants];
   });
 }
 
@@ -51,17 +51,17 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
       }
-      
+
       bool amount = false;
       amount = [[params objectForKey:@"amount"] boolValue];
-      
-      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
-      [session setDelegateWithDelegate:self];
+
+      SubscriptionCancelerSession *session = [[SubscriptionCancelerSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
+//      [session setDelegateWithDelegate:self];
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];
       [session setAmountWithAmount:amount];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
-      [session openOnSubscriptionCancelerWithMerchants:@[]];
+      [session openSubscriptionCanceler];
   });
 }
 
