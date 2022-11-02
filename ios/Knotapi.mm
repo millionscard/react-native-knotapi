@@ -4,7 +4,7 @@
 #import <React/RCTConvert.h>
 #import "KnotAPI/KnotAPI-Swift.h"
 
-@interface Knotapi () <CardOnFileDelegate>
+@interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
 @end
 
@@ -27,13 +27,26 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
           environment = EnvironmentSandbox;
       }
       CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
-      [session setDelegateWithDelegate:self];
+      CardSwitcherConfiguration *config = [[CardSwitcherConfiguration alloc] init];
+      [config setOnSuccessOnSuccess:^(NSString *merchant) {
+          [self sendEventWithName:@"CardSwitcher-onSuccess" body:@{@"merchant": merchant}];
+      }];
+      [config setOnEventOnEvent:^(NSString * event, NSString * message) {
+          [self sendEventWithName:@"CardSwitcher-onEvent" body:@{@"event": event, @"merchant": message}];
+      }];
+      [config setOnErrorOnError:^(NSString * error, NSString * message) {
+          [self sendEventWithName:@"CardSwitcher-onError" body:@{@"errorCode": error, @"errorMessage": message }];
+      }];
+      [config setOnExitOnExit:^{
+          [self sendEventWithName:@"CardSwitcher-onExit" body:nil];
+      }];
+      [config setOnFinishedOnFinished:^{
+          [self sendEventWithName:@"CardSwitcher-onFinished" body:nil];
+      }];
+      [session setConfigurationWithConfig:config];
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
-      NSLog(@"merchants: %@",merchants);
-      NSLog(@"companyName %@",companyName);
-      NSLog(@"customization %@",customization);
       [session openCardOnFileSwitcherWithMerchants:merchants];
   });
 }
@@ -52,11 +65,27 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
           environment = EnvironmentSandbox;
       }
 
-      bool amount = false;
+      bool amount = true;
       amount = [[params objectForKey:@"amount"] boolValue];
 
       SubscriptionCancelerSession *session = [[SubscriptionCancelerSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
-//      [session setDelegateWithDelegate:self];
+      SubscriptionCancelerConfiguration *config = [[SubscriptionCancelerConfiguration alloc] init];
+      [config setOnSuccessOnSuccess:^(NSString *merchant) {
+          [self sendEventWithName:@"SubscriptionCanceler-onSuccess" body:@{@"merchant": merchant}];
+      }];
+      [config setOnEventOnEvent:^(NSString * event, NSString * message) {
+          [self sendEventWithName:@"SubscriptionCanceler-onEvent" body:@{@"event": event, @"merchant": message}];
+      }];
+      [config setOnErrorOnError:^(NSString * error, NSString * message) {
+          [self sendEventWithName:@"SubscriptionCanceler-onError" body:@{@"errorCode": error, @"errorMessage": message }];
+      }];
+      [config setOnExitOnExit:^{
+          [self sendEventWithName:@"SubscriptionCanceler-onExit" body:nil];
+      }];
+      [config setOnFinishedOnFinished:^{
+          [self sendEventWithName:@"SubscriptionCanceler-onFinished" body:nil];
+      }];
+      [session setConfigurationWithConfiguration: config];
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];
       [session setAmountWithAmount:amount];
@@ -67,27 +96,7 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onSuccess", @"onError", @"onEvent", @"onExit", @"onFinished"];
-}
-
-- (void)onSuccessWithMerchant:(NSString *)merchant{
-  [self sendEventWithName:@"onSuccess" body:@{@"merchant": merchant}];
-}
-
-- (void)onEventWithEvent:(NSString *)event message:(NSString *)message{
-  [self sendEventWithName:@"onEvent" body:@{@"event": event, @"merchant": message}];
-}
-
-- (void)onErrorWithError:(NSString *)error message:(NSString *)message{
-  [self sendEventWithName:@"onError" body:@{@"errorCode": error, @"errorMessage": message }];
-}
-
-- (void)onExit{
-  [self sendEventWithName:@"onExit" body:nil];
-}
-
-- (void)onFinished{
-  [self sendEventWithName:@"onFinished" body:nil];
+  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"CardSwitcher-onFinished", @"SubscriptionCanceler-onSuccess", @"SubscriptionCanceler-onError", @"SubscriptionCanceler-onEvent", @"SubscriptionCanceler-onExit", @"SubscriptionCanceler-onFinished"];
 }
 
 @end
