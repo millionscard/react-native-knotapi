@@ -41,8 +41,11 @@ export const openSubscriptionCanceler = async (params: SubscriptionCancelerParam
 }
 
 type EventNames = keyof typeof eventNames
-export const addListener = (eventName: EventNames, callback: () => void) => {
-    eventEmitter.addListener(eventName, callback)
+export const addSubscriptionCancelerListener = (eventName: EventNames, callback: (event: any) => void) => {
+    return eventEmitter.addListener(`SubscriptionCanceler-${eventName}`, callback)
+}
+export const addCardSwitcherListener = (eventName: EventNames, callback: (event: any) => void) => {
+    return eventEmitter.addListener(`CardSwitcher-${eventName}`, callback)
 }
 
 export default Knotapi;

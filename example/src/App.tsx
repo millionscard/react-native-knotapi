@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import {Pressable, StyleSheet, View, Text} from 'react-native';
-import {openCardOnFileSwitcher, openSubscriptionCanceler} from 'react-native-knotapi';
+import {openCardOnFileSwitcher, openSubscriptionCanceler, addCardSwitcherListener, addSubscriptionCancelerListener} from 'react-native-knotapi';
+import {useEffect} from "react";
 
 export default function App() {
 
@@ -18,11 +19,11 @@ export default function App() {
             }
         })
     }
-const handleOpenSubscriptionCanceler = () => {
+    const handleOpenSubscriptionCanceler = () => {
         void openSubscriptionCanceler({
-            sessionId: "1c0a49cd-a28a-4c96-9ade-854eee575613",
+            sessionId: "fe243ffa-5dc4-4979-8963-75b72bbe0d92",
             clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
-            environment: "production",
+            environment: "sandbox",
             amount: true,
             customization: {
                 companyName: "Millions",
@@ -31,6 +32,21 @@ const handleOpenSubscriptionCanceler = () => {
             }
         })
     }
+
+    useEffect(() => {
+        const emitterSubscription = addCardSwitcherListener("onSuccess", (event) => {
+            console.log("onSuccess", "event", event)
+        });
+        const emitterSwitcher = addSubscriptionCancelerListener("onSuccess", (event) => {
+            console.log("onSuccess subscription", "event", event)
+        });
+
+        return () => {
+            emitterSubscription.remove()
+            emitterSwitcher.remove()
+        };
+    }, []);
+
 
     return (
         <View style={styles.container}>
