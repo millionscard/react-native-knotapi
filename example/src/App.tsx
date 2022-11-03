@@ -30,7 +30,9 @@ export default function App() {
                 companyName: "Millions",
                 primaryColor: "#5b138c",
                 textColor: "#e0e0e0"
-            }
+            },
+            merchantIds: [44],
+            merchantNames: ["Netflix"]
         })
     }
 
