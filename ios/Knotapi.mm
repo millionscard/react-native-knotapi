@@ -16,7 +16,8 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
-      NSArray<NSNumber*> *merchants = [params objectForKey:@"merchants"];
+      NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
+      NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
       NSDictionary *customization = [params objectForKey:@"customization"];
       NSString *companyName = [customization objectForKey:@"companyName"];
       NSString *textColor = [customization objectForKey:@"textColor"];
@@ -47,7 +48,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [session setCompanyNameWithCompanyName:companyName];
       [session setTextColorWithTextColor:textColor];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
-      [session openCardOnFileSwitcherWithMerchants:merchants];
+      [session setMerchantIdsWithMerchantIds:merchantIds];
+      [session setMerchantNamesWithMerchantNames:merchantNames];
+      [session openCardOnFileSwitcher];
   });
 }
 

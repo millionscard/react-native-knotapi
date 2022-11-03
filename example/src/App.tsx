@@ -11,7 +11,8 @@ export default function App() {
             sessionId: "9c361eed-f86c-4db7-8adb-92caca93f8d9",
             clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
             environment: "sandbox",
-            merchants: [1, 2, 3],
+            merchantIds: [44],
+            merchantNames: ["Google"],
             customization: {
                 companyName: "Millions",
                 primaryColor: "#5b138c",
