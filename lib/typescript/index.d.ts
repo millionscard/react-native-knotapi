@@ -14,13 +14,16 @@ declare type CustomizationType = {
 declare type CardOnFileSwitcherParams = {
     sessionId: string;
     clientId: string;
-    merchants?: number[];
+    merchantIds?: number[];
+    merchantNames?: string[];
     customization: CustomizationType;
     environment: 'production' | 'sandbox';
 };
 declare type SubscriptionCancelerParams = {
     sessionId: string;
     clientId: string;
+    merchantIds?: number[];
+    merchantNames?: string[];
     amount?: boolean;
     customization: CustomizationType;
     environment: 'production' | 'sandbox';
@@ -28,5 +31,6 @@ declare type SubscriptionCancelerParams = {
 export declare const openCardOnFileSwitcher: (params: CardOnFileSwitcherParams) => Promise<any>;
 export declare const openSubscriptionCanceler: (params: SubscriptionCancelerParams) => Promise<any>;
 declare type EventNames = keyof typeof eventNames;
-export declare const addListener: (eventName: EventNames, callback: () => void) => void;
+export declare const addSubscriptionCancelerListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
+export declare const addCardSwitcherListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
 export default Knotapi;
