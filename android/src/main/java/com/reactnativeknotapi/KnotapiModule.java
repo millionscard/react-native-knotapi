@@ -1,16 +1,19 @@
 package com.reactnativeknotapi;
 
 import android.content.Context;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.module.annotations.ReactModule;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.knotapi.cardonfileswitcher.CardOnFileSwitcher;
 import com.knotapi.cardonfileswitcher.Environment;
 import com.knotapi.cardonfileswitcher.OnSessionEventListener;
@@ -35,34 +38,50 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     return NAME;
   }
 
+  private void sendEvent(ReactContext reactContext,
+                         String eventName,
+                         @Nullable WritableMap params) {
+    reactContext
+      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+      .emit(eventName, params);
+  }
 
-  private final OnSessionEventListener onSessionEventListener = new OnSessionEventListener() {
-    @Override
-    public void onSuccess(String merchant) {
-      Log.d("onSuccess from main", merchant);
-    }
+  OnSessionEventListener getOnSessionEventListener(String prefix) {
+    return new OnSessionEventListener() {
+      @Override
+      public void onSuccess(String merchant) {
+        WritableMap params = Arguments.createMap();
+        params.putString("merchant", merchant);
+        sendEvent(getReactApplicationContext(), prefix + "onSuccess", params);
+      }
 
-    @Override
-    public void onError(String errorCode, String errorMessage) {
-      Log.d("onError", errorCode + " " + errorMessage);
-    }
+      @Override
+      public void onError(String errorCode, String errorMessage) {
+        WritableMap params = Arguments.createMap();
+        params.putString("message", errorMessage);
+        params.putString("error", errorCode);
+        sendEvent(getReactApplicationContext(), prefix + "onError", params);
+      }
 
-    @Override
-    public void onExit() {
-      Log.d("onExit", "exit");
-    }
+      @Override
+      public void onExit() {
+        sendEvent(getReactApplicationContext(), prefix + "onExit", null);
+      }
 
-    @Override
-    public void onFinished() {
-      Log.d("onFinished", "finished");
-    }
+      @Override
+      public void onFinished() {
+        sendEvent(getReactApplicationContext(), prefix + "onFinished", null);
+      }
 
-    @Override
-    public void onEvent(String eventName, String merchantName) {
-      Log.d("onEvent", eventName + " " + merchantName);
-    }
-  };
-
+      @Override
+      public void onEvent(String eventName, String merchantName) {
+        WritableMap params = Arguments.createMap();
+        params.putString("event", eventName);
+        params.putString("merchant", merchantName);
+        sendEvent(getReactApplicationContext(), prefix + "onError", params);
+      }
+    };
+  }
 
   // Example method
   // See https://reactnative.dev/docs/native-modules-android
@@ -113,7 +132,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
     }
     cardOnFileSwitcher.setCustomization(customizationObj);
-    cardOnFileSwitcher.setOnSessionEventListener(onSessionEventListener);
+    cardOnFileSwitcher.setOnSessionEventListener(getOnSessionEventListener("CardSwitcher-"));
     cardOnFileSwitcher.openCardOnFileSwitcher();
   }
 
@@ -170,7 +189,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
     }
     subscriptionCanceler.setCustomization(customizationObj);
-    subscriptionCanceler.setOnSessionEventListener(onSessionEventListener);
+    subscriptionCanceler.setOnSessionEventListener(getOnSessionEventListener("SubscriptionCanceler-"));
     subscriptionCanceler.openSubscriptionCanceller(amount);
   }
 
