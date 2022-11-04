@@ -30,8 +30,8 @@ type CustomizationType = {
     textColor?: string
     companyName?: string
 }
-type CardOnFileSwitcherParams = { sessionId: string, clientId: string, merchants?: number[], customization: CustomizationType, environment: 'production' | 'sandbox' }
-type SubscriptionCancelerParams = { sessionId: string, clientId: string, amount?: boolean, customization: CustomizationType, environment: 'production' | 'sandbox' }
+type CardOnFileSwitcherParams = { sessionId: string, clientId: string, merchantIds?: number[], merchantNames?: string[], customization: CustomizationType, environment: 'production' | 'sandbox' }
+type SubscriptionCancelerParams = { sessionId: string, clientId: string, merchantIds?: number[], merchantNames?: string[], amount?: boolean, customization: CustomizationType, environment: 'production' | 'sandbox' }
 export const openCardOnFileSwitcher = async (params: CardOnFileSwitcherParams) => {
     return Knotapi?.openCardSwitcher(params);
 }

@@ -91,24 +91,36 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     String clientId = params.getString("clientId");
     Customization customizationObj = new Customization();
     int[] merchantsArr;
+    String[] merchantNamesArr;
     if (params.hasKey("customization")) {
       ReadableMap customization = params.getMap("customization");
       customizationObj.setPrimaryColor(customization.getString("primaryColor"));
       customizationObj.setTextColor(customization.getString("textColor"));
       customizationObj.setCompanyName(customization.getString("companyName"));
     }
-    if (params.hasKey("merchants")) {
-      ReadableArray merchants = params.getArray("merchants");
+    if (params.hasKey("merchantIds")) {
+      ReadableArray merchantIds = params.getArray("merchantIds");
       // convert ReadableArray merchants to array of int
-      merchantsArr = new int[merchants.size()];
-      for (int i = 0; i < merchants.size(); i++) {
-        merchantsArr[i] = merchants.getInt(i);
+      merchantsArr = new int[merchantIds.size()];
+      for (int i = 0; i < merchantIds.size(); i++) {
+        merchantsArr[i] = merchantIds.getInt(i);
       }
     } else {
       merchantsArr = new int[]{};
     }
+    if (params.hasKey("merchantNames")) {
+      ReadableArray merchantNames = params.getArray("merchantNames");
+      // convert ReadableArray merchants to array of int
+      merchantNamesArr = new String[merchantNames.size()];
+      for (int i = 0; i < merchantNames.size(); i++) {
+        merchantNamesArr[i] = merchantNames.getString(i);
+      }
+    } else {
+      merchantNamesArr = new String[]{};
+    }
     cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
     cardOnFileSwitcher.setMerchantIds(merchantsArr);
+    cardOnFileSwitcher.setMerchantNames(merchantNamesArr);
     if (params.hasKey("environment")) {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
@@ -133,13 +145,39 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       amount = params.getBoolean("amount");
     }
     Customization customizationObj = new Customization();
+    int[] merchantsArr;
+    String[] merchantNamesArr;
     if (params.hasKey("customization")) {
       ReadableMap customization = params.getMap("customization");
       customizationObj.setPrimaryColor(customization.getString("primaryColor"));
       customizationObj.setTextColor(customization.getString("textColor"));
       customizationObj.setCompanyName(customization.getString("companyName"));
     }
+
+    if (params.hasKey("merchantIds")) {
+      ReadableArray merchantIds = params.getArray("merchantIds");
+      // convert ReadableArray merchants to array of int
+      merchantsArr = new int[merchantIds.size()];
+      for (int i = 0; i < merchantIds.size(); i++) {
+        merchantsArr[i] = merchantIds.getInt(i);
+      }
+    } else {
+      merchantsArr = new int[]{};
+    }
+    if (params.hasKey("merchantNames")) {
+      ReadableArray merchantNames = params.getArray("merchantNames");
+      // convert ReadableArray merchants to array of int
+      merchantNamesArr = new String[merchantNames.size()];
+      for (int i = 0; i < merchantNames.size(); i++) {
+        merchantNamesArr[i] = merchantNames.getString(i);
+      }
+    } else {
+      merchantNamesArr = new String[]{};
+    }
+
     subscriptionCanceler = subscriptionCanceler.getInstance();
+    subscriptionCanceler.setMerchantIds(merchantsArr);
+    subscriptionCanceler.setMerchantNames(merchantNamesArr);
     if (params.hasKey("environment")) {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
