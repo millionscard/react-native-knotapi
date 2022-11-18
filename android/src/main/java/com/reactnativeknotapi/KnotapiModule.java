@@ -125,8 +125,10 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
         cardOnFileSwitcher.init(context, sessionId, clientId, Environment.SANDBOX);
-      } else {
+      } else if (environment.equals("production")) {
         cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
+      } else {
+        cardOnFileSwitcher.init(context, sessionId, clientId, Environment.DEVELOPMENT);
       }
     } else {
       cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
@@ -182,8 +184,10 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
         subscriptionCanceler.init(context, sessionId, clientId, Environment.SANDBOX);
-      } else {
+      } else if (environment.equals("production")) {
         subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
+      } else {
+        subscriptionCanceler.init(context, sessionId, clientId, Environment.DEVELOPMENT);
       }
     } else {
       subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
