@@ -17,7 +17,7 @@ declare type CardOnFileSwitcherParams = {
     merchantIds?: number[];
     merchantNames?: string[];
     customization: CustomizationType;
-    environment: 'production' | 'sandbox';
+    environment: 'production' | 'sandbox' | 'development';
 };
 declare type SubscriptionCancelerParams = {
     sessionId: string;
@@ -26,7 +26,7 @@ declare type SubscriptionCancelerParams = {
     merchantNames?: string[];
     amount?: boolean;
     customization: CustomizationType;
-    environment: 'production' | 'sandbox';
+    environment: 'production' | 'sandbox' | 'development';
 };
 export declare const openCardOnFileSwitcher: (params: CardOnFileSwitcherParams) => Promise<any>;
 export declare const openSubscriptionCanceler: (params: SubscriptionCancelerParams) => Promise<any>;
