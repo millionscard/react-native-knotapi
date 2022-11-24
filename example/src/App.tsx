@@ -8,11 +8,9 @@ export default function App() {
 
     const handleOpenCardSwitcher = () => {
         void openCardOnFileSwitcher({
-            sessionId: "9c361eed-f86c-4db7-8adb-92caca93f8d9",
-            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
+            sessionId: "cc144c8f-d248-43dc-9ac1-b82d4f5b6a97",
+            clientId: "3f4acb6b-a8c9-47bc-820c-b0eaf24ee771",
             environment: "sandbox",
-            merchantIds: [44],
-            merchantNames: ["Google"],
             customization: {
                 companyName: "Millions",
                 primaryColor: "#5b138c",
@@ -22,8 +20,8 @@ export default function App() {
     }
     const handleOpenSubscriptionCanceler = () => {
         void openSubscriptionCanceler({
-            sessionId: "fe243ffa-5dc4-4979-8963-75b72bbe0d92",
-            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
+            sessionId: "44d5c96d-cd64-468f-a6d9-758fb24902b2",
+            clientId: "3f4acb6b-a8c9-47bc-820c-b0eaf24ee771",
             environment: "sandbox",
             amount: true,
             customization: {
