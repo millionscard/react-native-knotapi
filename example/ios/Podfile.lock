@@ -305,6 +305,7 @@ PODS:
     - glog
   - react-native-knotapi (0.1.33):
     - KnotAPI (~> 0.1.36)
+    - lottie-ios (= 3.5.0)
     - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
@@ -562,7 +563,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
-  react-native-knotapi: f16da195f2be7bea8715e06addbc521e1c59ef03
+  react-native-knotapi: 4df7642996b0d4454f28f9b2f19426f4abebb45d
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034
@@ -579,6 +580,6 @@ SPEC CHECKSUMS:
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: e1fa426cf47fbacc23e2572f85e657deb62e4a1f
+PODFILE CHECKSUM: e31365802cb3fa4315cdd3fc9190545a7d94d7c8
 
 COCOAPODS: 1.11.3
