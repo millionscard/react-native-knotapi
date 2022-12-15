@@ -74,10 +74,10 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.11.0)
-  - KnotAPI (0.1.36):
-    - lottie-ios (= 3.5.0)
+  - KnotAPI (0.1.38):
+    - lottie-ios
   - libevent (2.1.12)
-  - lottie-ios (3.5.0)
+  - lottie-ios (3.4.4)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -304,8 +304,7 @@ PODS:
   - React-logger (0.68.2):
     - glog
   - react-native-knotapi (0.1.33):
-    - KnotAPI (~> 0.1.36)
-    - lottie-ios (= 3.5.0)
+    - KnotAPI (~> 0.1.38)
     - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
@@ -545,9 +544,9 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 476ee3e89abb49e07f822b48323c51c57124b572
   hermes-engine: 84e3af1ea01dd7351ac5d8689cbbea1f9903ffc3
-  KnotAPI: 41bc00515419335416965552682c23adf1675970
+  KnotAPI: 7baacc184d23ad5aef50a671059de5c41d3bd0b2
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
+  lottie-ios: 8f97d3271e155c2d688875c29cd3c74908aef5f8
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0
@@ -563,7 +562,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
-  react-native-knotapi: 4df7642996b0d4454f28f9b2f19426f4abebb45d
+  react-native-knotapi: 9894668d7fd0850a60e52b6ad95f890d93501f9c
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034
@@ -580,6 +579,6 @@ SPEC CHECKSUMS:
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: e31365802cb3fa4315cdd3fc9190545a7d94d7c8
+PODFILE CHECKSUM: cec82e74414a09b22ffda0dfb36b7f16bca1c452
 
 COCOAPODS: 1.11.3
