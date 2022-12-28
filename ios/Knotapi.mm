@@ -23,10 +23,15 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *textColor = [customization objectForKey:@"textColor"];
       NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       NSString *environmentString = [params objectForKey:@"environment"];
+      BOOL useCategories = [[params objectForKey:@"useCategories"] isEqual:@"true"];
+      BOOL useSelection = [[params objectForKey:@"useSelection"] isEqual:@"true"];
+      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] isEqual:@"true"];
+      NSString *logo = [params objectForKey:@"logo"];
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
       }
+      
       CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
       CardSwitcherConfiguration *config = [[CardSwitcherConfiguration alloc] init];
       [config setOnSuccessOnSuccess:^(NSString *merchant) {
@@ -50,6 +55,10 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [session setPrimaryColorWithPrimaryColor:primaryColor];
       [session setMerchantIdsWithMerchantIds:merchantIds];
       [session setMerchantNamesWithMerchantNames:merchantNames];
+      [session setUseSelectionWithUseSelection: useSelection];
+      [session setUseCategoriesWithUseCategories: useCategories];
+      [session setUseSingleFlowWithUseSingleFlow: useSingleFlow];
+      [session setLogoWithLogo: logo];
       [session openCardOnFileSwitcher];
   });
 }
@@ -63,6 +72,10 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       NSString *textColor = [customization objectForKey:@"textColor"];
       NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       NSString *environmentString = [params objectForKey:@"environment"];
+      BOOL useCategories = [[params objectForKey:@"useCategories"] isEqual:@"true"];
+      BOOL useSelection = [[params objectForKey:@"useSelection"] isEqual:@"true"];
+      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] isEqual:@"true"];
+      NSString *logo = [params objectForKey:@"logo"];
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
@@ -93,6 +106,10 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       [session setTextColorWithTextColor:textColor];
       [session setAmountWithAmount:amount];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
+      [session setUseSelectionWithUseSelection: useSelection];
+      [session setUseCategoriesWithUseCategories: useCategories];
+      [session setUseSingleFlowWithUseSingleFlow: useSingleFlow];
+      [session setLogoWithLogo: logo];
       [session openSubscriptionCanceler];
   });
 }

@@ -27,6 +27,7 @@ target 'KnotapiExample' do
   # you should disable the next line.
   use_frameworks!
   use_flipper!()
+  pod 'lottie-ios', '~> 3.5.0'
 
   post_install do |installer|
     react_native_post_install(installer)
