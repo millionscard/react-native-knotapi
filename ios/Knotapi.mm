@@ -23,9 +23,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *textColor = [customization objectForKey:@"textColor"];
       NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       NSString *environmentString = [params objectForKey:@"environment"];
-      BOOL useCategories = [[params objectForKey:@"useCategories"] isEqual:@"true"];
-      BOOL useSelection = [[params objectForKey:@"useSelection"] isEqual:@"true"];
-      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] isEqual:@"true"];
+      BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
+      BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
+      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
@@ -74,9 +74,9 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       NSString *textColor = [customization objectForKey:@"textColor"];
       NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       NSString *environmentString = [params objectForKey:@"environment"];
-      BOOL useCategories = [[params objectForKey:@"useCategories"] isEqual:@"true"];
-      BOOL useSelection = [[params objectForKey:@"useSelection"] isEqual:@"true"];
-      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] isEqual:@"true"];
+      BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
+      BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
+      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
