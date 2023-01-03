@@ -11,23 +11,22 @@ declare type CustomizationType = {
     textColor?: string;
     companyName?: string;
 };
-declare type CardOnFileSwitcherParams = {
+declare type CommonConfig = {
     sessionId: string;
     clientId: string;
     merchantIds?: number[];
     merchantNames?: string[];
     customization: CustomizationType;
     environment: 'production' | 'sandbox' | 'development';
+    useCategories?: boolean;
+    logo?: string;
+    useSelection?: boolean;
+    useSingleFlow?: boolean;
 };
+declare type CardOnFileSwitcherParams = CommonConfig;
 declare type SubscriptionCancelerParams = {
-    sessionId: string;
-    clientId: string;
-    merchantIds?: number[];
-    merchantNames?: string[];
     amount?: boolean;
-    customization: CustomizationType;
-    environment: 'production' | 'sandbox' | 'development';
-};
+} & CommonConfig;
 export declare const openCardOnFileSwitcher: (params: CardOnFileSwitcherParams) => Promise<any>;
 export declare const openSubscriptionCanceler: (params: SubscriptionCancelerParams) => Promise<any>;
 declare type EventNames = keyof typeof eventNames;

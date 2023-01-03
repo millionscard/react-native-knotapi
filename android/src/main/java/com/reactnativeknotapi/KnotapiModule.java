@@ -121,6 +121,22 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
     cardOnFileSwitcher.setMerchantIds(merchantsArr);
     cardOnFileSwitcher.setMerchantNames(merchantNamesArr);
+    if (params.hasKey("useCategories")) {
+      boolean useCategories = params.getBoolean("useCategories");
+      cardOnFileSwitcher.setUseCategories(useCategories);
+    }
+    if (params.hasKey("useSelection")) {
+      boolean useSelection = params.getBoolean("useSelection");
+      cardOnFileSwitcher.setUseSelection(useSelection);
+    }
+    if (params.hasKey("useSingleFlow")) {
+      boolean useSingleFlow = params.getBoolean("useSingleFlow");
+      cardOnFileSwitcher.setUseSingleFlow(useSingleFlow);
+    }
+    if (params.hasKey("logo")){
+      String logo = params.getString("logo");
+      cardOnFileSwitcher.setLogo(logo);
+    }
     if (params.hasKey("environment")) {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
@@ -180,6 +196,22 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     subscriptionCanceler = subscriptionCanceler.getInstance();
     subscriptionCanceler.setMerchantIds(merchantsArr);
     subscriptionCanceler.setMerchantNames(merchantNamesArr);
+    if (params.hasKey("useCategories")) {
+      boolean useCategories = params.getBoolean("useCategories");
+      subscriptionCanceler.setUseCategories(useCategories);
+    }
+    if (params.hasKey("useSelection")) {
+      boolean useSelection = params.getBoolean("useSelection");
+      subscriptionCanceler.setUseSelection(useSelection);
+    }
+    if (params.hasKey("useSingleFlow")) {
+      boolean useSingleFlow = params.getBoolean("useSingleFlow");
+      subscriptionCanceler.setUseSingleFlow(useSingleFlow);
+    }
+    if (params.hasKey("logo")){
+      String logo = params.getString("logo");
+      subscriptionCanceler.setLogo(logo);
+    }
     if (params.hasKey("environment")) {
       String environment = params.getString("environment");
       if (environment.equals("sandbox")) {
