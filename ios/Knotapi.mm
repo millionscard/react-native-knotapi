@@ -27,6 +27,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
       }
+      if ([environmentString isEqualToString:@"development"]) {
+          environment = EnvironmentDevelopment;
+      }
       CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
       CardSwitcherConfiguration *config = [[CardSwitcherConfiguration alloc] init];
       [config setOnSuccessOnSuccess:^(NSString *merchant) {
@@ -66,6 +69,9 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
+      }
+      if ([environmentString isEqualToString:@"development"]) {
+          environment = EnvironmentDevelopment;
       }
 
       bool amount = true;
