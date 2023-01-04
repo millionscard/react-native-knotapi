@@ -123,15 +123,15 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     cardOnFileSwitcher.setMerchantNames(merchantNamesArr);
     if (params.hasKey("useCategories")) {
       boolean useCategories = params.getBoolean("useCategories");
-      cardOnFileSwitcher.setUseCategories(useCategories);
+      cardOnFileSwitcher.setUserCategories(useCategories);
     }
     if (params.hasKey("useSelection")) {
       boolean useSelection = params.getBoolean("useSelection");
-      cardOnFileSwitcher.setUseSelection(useSelection);
+      cardOnFileSwitcher.setUserSelection(useSelection);
     }
     if (params.hasKey("useSingleFlow")) {
       boolean useSingleFlow = params.getBoolean("useSingleFlow");
-      cardOnFileSwitcher.setUseSingleFlow(useSingleFlow);
+      cardOnFileSwitcher.setUserSingleFlow(useSingleFlow);
     }
     if (params.hasKey("logo")){
       String logo = params.getString("logo");
