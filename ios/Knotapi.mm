@@ -14,19 +14,28 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
+      NSString *companyName = nil;
+      NSString *textColor = nil;
+      NSString *primaryColor = nil;
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
       NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
       NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
-      NSDictionary *customization = [params objectForKey:@"customization"];
-      NSString *companyName = [customization objectForKey:@"companyName"];
-      NSString *textColor = [customization objectForKey:@"textColor"];
-      NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       NSString *environmentString = [params objectForKey:@"environment"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
+      if (params[@"customization"]) {
+        NSDictionary *customization = [params objectForKey:@"customization"];
+        companyName = [customization objectForKey:@"companyName"];
+        textColor = [customization objectForKey:@"textColor"];
+        primaryColor = [customization objectForKey:@"primaryColor"];
+      } else {
+        companyName = [params objectForKey:@"companyName"];
+        textColor = [params objectForKey:@"textColor"];
+        primaryColor = [params objectForKey:@"primaryColor"];
+      }
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
@@ -67,17 +76,26 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
 
 RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
+      NSString *companyName = nil;
+      NSString *textColor = nil;
+      NSString *primaryColor = nil;
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
-      NSDictionary *customization = [params objectForKey:@"customization"];
-      NSString *companyName = [customization objectForKey:@"companyName"];
-      NSString *textColor = [customization objectForKey:@"textColor"];
-      NSString *primaryColor = [customization objectForKey:@"primaryColor"];
       NSString *environmentString = [params objectForKey:@"environment"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
+      if (params[@"customization"]) {
+        NSDictionary *customization = [params objectForKey:@"customization"];
+        companyName = [customization objectForKey:@"companyName"];
+        textColor = [customization objectForKey:@"textColor"];
+        primaryColor = [customization objectForKey:@"primaryColor"];
+      } else {
+        companyName = [params objectForKey:@"companyName"];
+        textColor = [params objectForKey:@"textColor"];
+        primaryColor = [params objectForKey:@"primaryColor"];
+      }
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;

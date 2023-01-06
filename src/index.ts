@@ -35,12 +35,15 @@ type CommonConfig = {
     clientId: string,
     merchantIds?: number[],
     merchantNames?: string[],
-    customization: CustomizationType,
+    customization?: CustomizationType,
     environment: 'production' | 'sandbox' | 'development',
     useCategories?: boolean,
     logo?: string,
     useSelection?: boolean,
     useSingleFlow?: boolean,
+    primaryColor?: string,
+    textColor?: string,
+    companyName?: string,
 }
 type CardOnFileSwitcherParams = CommonConfig
 type SubscriptionCancelerParams = { amount?: boolean, } & CommonConfig
