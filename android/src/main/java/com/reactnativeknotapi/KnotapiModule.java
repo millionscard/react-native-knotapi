@@ -15,10 +15,11 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.knotapi.cardonfileswitcher.CardOnFileSwitcher;
-import com.knotapi.cardonfileswitcher.Environment;
-import com.knotapi.cardonfileswitcher.OnSessionEventListener;
+import com.knotapi.cardonfileswitcher.models.Configuration;
+import com.knotapi.cardonfileswitcher.models.Environment;
+import com.knotapi.cardonfileswitcher.interfaces.OnSessionEventListener;
 import com.knotapi.cardonfileswitcher.SubscriptionCanceler;
-import com.knotapi.cardonfileswitcher.model.Customization;
+import com.knotapi.cardonfileswitcher.models.Options;
 
 @ReactModule(name = KnotapiModule.NAME)
 public class KnotapiModule extends ReactContextBaseJavaModule {
@@ -83,31 +84,49 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     };
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-  @ReactMethod
-  public void openCardSwitcher(ReadableMap params) {
+  public Environment getEnvironment(@Nullable String env) {
+    switch (env) {
+      case "sandbox":
+        return Environment.SANDBOX;
+      case "development":
+        return Environment.DEVELOPMENT;
+      default:
+        return Environment.PRODUCTION;
+    }
+  }
+
+  public Configuration getConfiguration(ReadableMap params) {
     String sessionId = params.getString("sessionId");
     String clientId = params.getString("clientId");
-    Customization customizationObj = new Customization();
-    int[] merchantsArr;
-    String[] merchantNamesArr;
-    if (params.hasKey("customization")) {
-      ReadableMap customization = params.getMap("customization");
-      customizationObj.setPrimaryColor(customization.getString("primaryColor"));
-      customizationObj.setTextColor(customization.getString("textColor"));
-      customizationObj.setCompanyName(customization.getString("companyName"));
-    }
+    Environment environment = params.hasKey("environment") ? getEnvironment(params.getString("environment")) : null;
+    Configuration configuration = new Configuration(environment, clientId, sessionId);
+    return configuration;
+  }
+
+  public @Nullable Options getOptions(ReadableMap params) {
+    @Nullable String companyName = params.hasKey("companyName") ? params.getString("companyName") : null;
+    @Nullable String primaryColor = params.hasKey("primaryColor") ? params.getString("primaryColor") : null;
+    @Nullable String textColor = params.hasKey("textColor") ? params.getString("textColor") : null;
+    boolean useCategories = params.hasKey("useCategories") ? params.getBoolean("useCategories") : false;
+    boolean useSelection = params.hasKey("useSelection") ? params.getBoolean("useSelection") : false;
+    boolean useSingleFlow = params.hasKey("useSingleFlow") ? params.getBoolean("useSingleFlow") : false;
+    boolean amount = params.hasKey("amount") ? params.getBoolean("amount") : false;
+    @Nullable String logo = params.hasKey("logo") ? params.getString("logo") : null;
+    @Nullable Options options = new Options();
+
+    @Nullable int[] merchantIdsArr;
     if (params.hasKey("merchantIds")) {
       ReadableArray merchantIds = params.getArray("merchantIds");
       // convert ReadableArray merchants to array of int
-      merchantsArr = new int[merchantIds.size()];
+      merchantIdsArr = new int[merchantIds.size()];
       for (int i = 0; i < merchantIds.size(); i++) {
-        merchantsArr[i] = merchantIds.getInt(i);
+        merchantIdsArr[i] = merchantIds.getInt(i);
       }
     } else {
-      merchantsArr = new int[]{};
+      merchantIdsArr = new int[]{};
     }
+
+    @Nullable String[] merchantNamesArr;
     if (params.hasKey("merchantNames")) {
       ReadableArray merchantNames = params.getArray("merchantNames");
       // convert ReadableArray merchants to array of int
@@ -118,115 +137,45 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     } else {
       merchantNamesArr = new String[]{};
     }
-    cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
-    cardOnFileSwitcher.setMerchantIds(merchantsArr);
-    cardOnFileSwitcher.setMerchantNames(merchantNamesArr);
-    if (params.hasKey("useCategories")) {
-      boolean useCategories = params.getBoolean("useCategories");
-      cardOnFileSwitcher.setUserCategories(useCategories);
-    }
-    if (params.hasKey("useSelection")) {
-      boolean useSelection = params.getBoolean("useSelection");
-      cardOnFileSwitcher.setUserSelection(useSelection);
-    }
-    if (params.hasKey("useSingleFlow")) {
-      boolean useSingleFlow = params.getBoolean("useSingleFlow");
-      cardOnFileSwitcher.setUserSingleFlow(useSingleFlow);
-    }
-    if (params.hasKey("logo")){
-      String logo = params.getString("logo");
-      cardOnFileSwitcher.setLogo(logo);
-    }
-    if (params.hasKey("environment")) {
-      String environment = params.getString("environment");
-      if (environment.equals("sandbox")) {
-        cardOnFileSwitcher.init(context, sessionId, clientId, Environment.SANDBOX);
-      } else if (environment.equals("production")) {
-        cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
-      } else {
-        cardOnFileSwitcher.init(context, sessionId, clientId, Environment.DEVELOPMENT);
-      }
+
+    if (params.hasKey("customization")) {
+      ReadableMap customization = params.getMap("customization");
+      options.setPrimaryColor(customization.hasKey("primaryColor") ? customization.getString("primaryColor") : null);
+      options.setTextColor(customization.hasKey("textColor") ? customization.getString("textColor") : null);
+      options.setCompanyName(customization.hasKey("companyName") ? customization.getString("companyName") : null);
     } else {
-      cardOnFileSwitcher.init(context, sessionId, clientId, Environment.PRODUCTION);
+      options.setPrimaryColor(primaryColor);
+      options.setTextColor(textColor);
+      options.setCompanyName(companyName);
     }
-    cardOnFileSwitcher.setCustomization(customizationObj);
-    cardOnFileSwitcher.setOnSessionEventListener(getOnSessionEventListener("CardSwitcher-"));
+
+    options.setMerchantIds(merchantIdsArr);
+    options.setMerchantNames(merchantNamesArr);
+    options.setUseCategories(useCategories);
+    options.setUseSelection(useSelection);
+    options.setUseSingleFlow(useSingleFlow);
+    options.setLogo(logo);
+
+    return options;
+  }
+
+  // Example method
+  // See https://reactnative.dev/docs/native-modules-android
+  @ReactMethod
+  public void openCardSwitcher(ReadableMap params) {
+    Configuration configuration = getConfiguration(params);
+    Options options = getOptions(params);
+    cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
+    cardOnFileSwitcher.init(context, configuration, options, getOnSessionEventListener("CardSwitcher-"));
     cardOnFileSwitcher.openCardOnFileSwitcher();
   }
 
   @ReactMethod
   public void openSubscriptionCanceler(ReadableMap params) {
-    String sessionId = params.getString("sessionId");
-    String clientId = params.getString("clientId");
-    boolean amount = false;
-    if (params.hasKey("amount")) {
-      amount = params.getBoolean("amount");
-    }
-    Customization customizationObj = new Customization();
-    int[] merchantsArr;
-    String[] merchantNamesArr;
-    if (params.hasKey("customization")) {
-      ReadableMap customization = params.getMap("customization");
-      customizationObj.setPrimaryColor(customization.getString("primaryColor"));
-      customizationObj.setTextColor(customization.getString("textColor"));
-      customizationObj.setCompanyName(customization.getString("companyName"));
-    }
-
-    if (params.hasKey("merchantIds")) {
-      ReadableArray merchantIds = params.getArray("merchantIds");
-      // convert ReadableArray merchants to array of int
-      merchantsArr = new int[merchantIds.size()];
-      for (int i = 0; i < merchantIds.size(); i++) {
-        merchantsArr[i] = merchantIds.getInt(i);
-      }
-    } else {
-      merchantsArr = new int[]{};
-    }
-    if (params.hasKey("merchantNames")) {
-      ReadableArray merchantNames = params.getArray("merchantNames");
-      // convert ReadableArray merchants to array of int
-      merchantNamesArr = new String[merchantNames.size()];
-      for (int i = 0; i < merchantNames.size(); i++) {
-        merchantNamesArr[i] = merchantNames.getString(i);
-      }
-    } else {
-      merchantNamesArr = new String[]{};
-    }
-
+    Configuration configuration = getConfiguration(params);
+    Options options = getOptions(params);
     subscriptionCanceler = subscriptionCanceler.getInstance();
-    subscriptionCanceler.setMerchantIds(merchantsArr);
-    subscriptionCanceler.setMerchantNames(merchantNamesArr);
-    if (params.hasKey("useCategories")) {
-      boolean useCategories = params.getBoolean("useCategories");
-      subscriptionCanceler.setUseCategories(useCategories);
-    }
-    if (params.hasKey("useSelection")) {
-      boolean useSelection = params.getBoolean("useSelection");
-      subscriptionCanceler.setUseSelection(useSelection);
-    }
-    if (params.hasKey("useSingleFlow")) {
-      boolean useSingleFlow = params.getBoolean("useSingleFlow");
-      subscriptionCanceler.setUseSingleFlow(useSingleFlow);
-    }
-    if (params.hasKey("logo")){
-      String logo = params.getString("logo");
-      subscriptionCanceler.setLogo(logo);
-    }
-    if (params.hasKey("environment")) {
-      String environment = params.getString("environment");
-      if (environment.equals("sandbox")) {
-        subscriptionCanceler.init(context, sessionId, clientId, Environment.SANDBOX);
-      } else if (environment.equals("production")) {
-        subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
-      } else {
-        subscriptionCanceler.init(context, sessionId, clientId, Environment.DEVELOPMENT);
-      }
-    } else {
-      subscriptionCanceler.init(context, sessionId, clientId, Environment.PRODUCTION);
-    }
-    subscriptionCanceler.setCustomization(customizationObj);
-    subscriptionCanceler.setOnSessionEventListener(getOnSessionEventListener("SubscriptionCanceler-"));
-    subscriptionCanceler.openSubscriptionCanceller(amount);
+    subscriptionCanceler.init(context, configuration, options, getOnSessionEventListener("SubscriptionCanceler-"));
+    subscriptionCanceler.openSubscriptionCanceller();
   }
-
 }

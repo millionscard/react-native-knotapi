@@ -8,29 +8,24 @@ export default function App() {
 
     const handleOpenCardSwitcher = () => {
         void openCardOnFileSwitcher({
-            sessionId: "cc144c8f-d248-43dc-9ac1-b82d4f5b6a97",
-            clientId: "3f4acb6b-a8c9-47bc-820c-b0eaf24ee771",
-            environment: "sandbox",
-            customization: {
-                companyName: "Millions",
-                primaryColor: "#5b138c",
-                textColor: "#e0e0e0"
-            }
+            sessionId: "89f96689-725a-457d-806c-c41981347862",
+            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
+            environment: "development",
+            companyName: "Millions",
+            primaryColor: "#5b138c",
+            textColor: "#e0e0e0",
         })
     }
     const handleOpenSubscriptionCanceler = () => {
         void openSubscriptionCanceler({
-            sessionId: "44d5c96d-cd64-468f-a6d9-758fb24902b2",
-            clientId: "3f4acb6b-a8c9-47bc-820c-b0eaf24ee771",
-            environment: "sandbox",
+            sessionId: "0e3db0c1-0703-4df9-96d9-4cadf9ecaca4",
+            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
+            environment: "development",
             amount: true,
-            customization: {
-                companyName: "Millions",
-                primaryColor: "#5b138c",
-                textColor: "#e0e0e0"
-            },
-            merchantIds: [44],
-            merchantNames: ["Netflix"]
+            companyName: "Millions",
+            primaryColor: "#5b138c",
+            textColor: "#e0e0e0",
+            merchantIds: [44]
         })
     }
 
