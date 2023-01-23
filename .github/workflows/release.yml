@@ -11,14 +11,6 @@ jobs:
       - name: Build Changelog
         uses: mikepenz/release-changelog-builder-action@v3
         with:
-          configurationJson: |
-          {
-            "categories": [
-              {
-                "title": "## 🚀 Features",
-                "labels": ["feature"]
-              },
-            ]
-          }
+          configurationJson: ".github/configuration.json"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
