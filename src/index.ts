@@ -1,4 +1,4 @@
-import {NativeModules, Platform, NativeEventEmitter} from 'react-native';
+import {NativeModules, Platform, NativeEventEmitter, InteractionManager} from 'react-native';
 
 const LINKING_ERROR =
     `The package 'react-native-knotapi' doesn't seem to be linked. Make sure: \n\n` +
@@ -47,12 +47,20 @@ type CommonConfig = {
 }
 type CardOnFileSwitcherParams = CommonConfig
 type SubscriptionCancelerParams = { amount?: boolean, } & CommonConfig
-export const openCardOnFileSwitcher = async (params: CardOnFileSwitcherParams) => {
-    return Knotapi?.openCardSwitcher(params);
+export const openCardOnFileSwitcher = (params: CardOnFileSwitcherParams) => {
+    InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+            Knotapi?.openCardSwitcher(params);
+        }, 50)
+    });
 }
 
-export const openSubscriptionCanceler = async (params: SubscriptionCancelerParams) => {
-    return Knotapi?.openSubscriptionCanceler(params);
+export const openSubscriptionCanceler = (params: SubscriptionCancelerParams) => {
+    InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+            Knotapi?.openSubscriptionCanceler(params);
+        }, 50)
+    });
 }
 
 type EventNames = keyof typeof eventNames
