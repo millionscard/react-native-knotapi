@@ -7,7 +7,7 @@ import {useEffect} from "react";
 export default function App() {
 
     const handleOpenCardSwitcher = () => {
-        void openCardOnFileSwitcher({
+        openCardOnFileSwitcher({
             sessionId: "89f96689-725a-457d-806c-c41981347862",
             clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
             environment: "development",
@@ -17,7 +17,7 @@ export default function App() {
         })
     }
     const handleOpenSubscriptionCanceler = () => {
-        void openSubscriptionCanceler({
+        openSubscriptionCanceler({
             sessionId: "0e3db0c1-0703-4df9-96d9-4cadf9ecaca4",
             clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
             environment: "development",
