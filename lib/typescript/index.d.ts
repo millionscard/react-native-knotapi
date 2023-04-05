@@ -10,6 +10,9 @@ declare type CustomizationType = {
     primaryColor?: string;
     textColor?: string;
     companyName?: string;
+    buttonCorners?: string,
+    buttonFontSize?: string,
+    buttonPaddings?: string,
 };
 declare type CommonConfig = {
     sessionId: string;
@@ -25,13 +28,16 @@ declare type CommonConfig = {
     primaryColor?: string;
     textColor?: string;
     companyName?: string;
+    buttonCorners?: string,
+    buttonFontSize?: string,
+    buttonPaddings?: string,
 };
 declare type CardOnFileSwitcherParams = CommonConfig;
 declare type SubscriptionCancelerParams = {
     amount?: boolean;
 } & CommonConfig;
-export declare const openCardOnFileSwitcher: (params: CardOnFileSwitcherParams) => Promise<any>;
-export declare const openSubscriptionCanceler: (params: SubscriptionCancelerParams) => Promise<any>;
+export declare const openCardOnFileSwitcher: (params: CardOnFileSwitcherParams) => void;
+export declare const openSubscriptionCanceler: (params: SubscriptionCancelerParams) => void;
 declare type EventNames = keyof typeof eventNames;
 export declare const addSubscriptionCancelerListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
 export declare const addCardSwitcherListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;

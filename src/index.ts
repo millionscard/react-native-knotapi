@@ -28,7 +28,10 @@ const eventEmitter = new NativeEventEmitter(Knotapi)
 type CustomizationType = {
     primaryColor?: string
     textColor?: string
-    companyName?: string
+    companyName?: string,
+    buttonCorners?: string,
+    buttonFontSize?: string,
+    buttonPaddings?: string,
 }
 type CommonConfig = {
     sessionId: string,
@@ -44,6 +47,9 @@ type CommonConfig = {
     primaryColor?: string,
     textColor?: string,
     companyName?: string,
+    buttonCorners?: string,
+    buttonFontSize?: string,
+    buttonPaddings?: string,
 }
 type CardOnFileSwitcherParams = CommonConfig
 type SubscriptionCancelerParams = { amount?: boolean, } & CommonConfig
