@@ -8,12 +8,15 @@ export default function App() {
 
     const handleOpenCardSwitcher = () => {
         openCardOnFileSwitcher({
-            sessionId: "89f96689-725a-457d-806c-c41981347862",
-            clientId: "ab86955e-22f4-49c3-97d7-369973f4cb9e",
-            environment: "development",
+            sessionId: "5484d1d3-6740-494f-af07-33d520afb0f1",
+            clientId: "3f4acb6b-a8c9-47bc-820c-b0eaf24ee771",
+            environment: "sandbox",
             companyName: "Millions",
             primaryColor: "#5b138c",
             textColor: "#e0e0e0",
+            buttonCorners: 80.3,
+            buttonFontSize: 20.4,
+            buttonPaddings: 20.4,
         })
     }
     const handleOpenSubscriptionCanceler = () => {
@@ -25,7 +28,10 @@ export default function App() {
             companyName: "Millions",
             primaryColor: "#5b138c",
             textColor: "#e0e0e0",
-            merchantIds: [44]
+            merchantIds: [44],
+            buttonCorners: 80.3,
+            buttonFontSize: 20.4,
+            buttonPaddings: 20.4,
         })
     }
 

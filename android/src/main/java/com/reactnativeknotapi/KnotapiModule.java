@@ -105,6 +105,9 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
 
   public @Nullable Options getOptions(ReadableMap params) {
     @Nullable String companyName = params.hasKey("companyName") ? params.getString("companyName") : null;
+    float buttonCorners = params.hasKey("buttonCorners") ? (float) params.getDouble("buttonCorners") : Float.parseFloat("0.0");
+    float buttonFontSize = params.hasKey("buttonFontSize") ? (float) params.getDouble("buttonFontSize") : Float.parseFloat("0.0");
+    float buttonPaddings = params.hasKey("buttonPaddings") ? (float) params.getDouble("buttonPaddings") : Float.parseFloat("0.0");
     @Nullable String primaryColor = params.hasKey("primaryColor") ? params.getString("primaryColor") : null;
     @Nullable String textColor = params.hasKey("textColor") ? params.getString("textColor") : null;
     boolean useCategories = params.hasKey("useCategories") ? params.getBoolean("useCategories") : false;
@@ -143,10 +146,16 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       options.setPrimaryColor(customization.hasKey("primaryColor") ? customization.getString("primaryColor") : null);
       options.setTextColor(customization.hasKey("textColor") ? customization.getString("textColor") : null);
       options.setCompanyName(customization.hasKey("companyName") ? customization.getString("companyName") : null);
+      options.setButtonCorners(customization.hasKey("buttonCorners") ? (float) customization.getDouble("buttonCorners") : Float.parseFloat("0.0"));
+      options.setButtonFontSize(customization.hasKey("buttonFontSize") ? (float) customization.getDouble("buttonFontSize") : Float.parseFloat("0.0"));
+      options.setButtonPaddings(customization.hasKey("buttonPaddings") ? (float) customization.getDouble("buttonPaddings") : Float.parseFloat("0.0"));
     } else {
       options.setPrimaryColor(primaryColor);
       options.setTextColor(textColor);
       options.setCompanyName(companyName);
+      options.setButtonCorners(buttonCorners);
+      options.setButtonFontSize(buttonFontSize);
+      options.setButtonPaddings(buttonPaddings);
     }
 
     options.setMerchantIds(merchantIdsArr);

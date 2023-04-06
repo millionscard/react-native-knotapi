@@ -17,6 +17,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *companyName = nil;
       NSString *textColor = nil;
       NSString *primaryColor = nil;
+      NSNumber *buttonCorners = @(0.0);
+      NSNumber *buttonFontSize = @(0.0);
+      NSNumber *buttonPaddings = @(0.0);
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
       NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
@@ -26,6 +29,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
+
       if (params[@"customization"]) {
         NSDictionary *customization = [params objectForKey:@"customization"];
         companyName = [customization objectForKey:@"companyName"];
@@ -36,6 +40,19 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
         textColor = [params objectForKey:@"textColor"];
         primaryColor = [params objectForKey:@"primaryColor"];
       }
+
+      if ([params objectForKey:@"buttonCorners"]) {
+          buttonCorners = [params objectForKey:@"buttonCorners"];
+      }
+
+      if ([params objectForKey:@"buttonFontSize"]) {
+          buttonFontSize = [params objectForKey:@"buttonFontSize"];
+      }
+
+      if ([params objectForKey:@"buttonPaddings"]) {
+          buttonPaddings = [params objectForKey:@"buttonPaddings"];
+      }
+
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
           environment = EnvironmentSandbox;
@@ -62,6 +79,12 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       }];
       [session setConfigurationWithConfig:config];
       [session setCompanyNameWithCompanyName:companyName];
+
+      [session setButtonCornersWithButtonCorners:buttonCorners];
+      [session setButtonFontSizeWithButtonFontSize:buttonFontSize];
+      [session setButtonPaddingsWithButtonPaddings:buttonPaddings];
+
+
       [session setTextColorWithTextColor:textColor];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
       [session setMerchantIdsWithMerchantIds:merchantIds];
@@ -77,6 +100,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
 RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
       NSString *companyName = nil;
+      NSNumber *buttonCorners = @(0.0);
+      NSNumber *buttonFontSize = @(0.0);
+      NSNumber *buttonPaddings = @(0.0);
       NSString *textColor = nil;
       NSString *primaryColor = nil;
       NSString *sessionId = [params objectForKey:@"sessionId"];
@@ -86,6 +112,17 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
+      if ([params objectForKey:@"buttonCorners"]) {
+          buttonCorners = [params objectForKey:@"buttonCorners"];
+      }
+
+      if ([params objectForKey:@"buttonFontSize"]) {
+          buttonFontSize = [params objectForKey:@"buttonFontSize"];
+      }
+
+      if ([params objectForKey:@"buttonPaddings"]) {
+          buttonPaddings = [params objectForKey:@"buttonPaddings"];
+      }
       if (params[@"customization"]) {
         NSDictionary *customization = [params objectForKey:@"customization"];
         companyName = [customization objectForKey:@"companyName"];
@@ -126,6 +163,9 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       }];
       [session setConfigurationWithConfiguration: config];
       [session setCompanyNameWithCompanyName:companyName];
+      [session setButtonCornersWithButtonCorners:buttonCorners];
+      [session setButtonFontSizeWithButtonFontSize:buttonFontSize];
+      [session setButtonPaddingsWithButtonPaddings:buttonPaddings];
       [session setTextColorWithTextColor:textColor];
       [session setAmountWithAmount:amount];
       [session setPrimaryColorWithPrimaryColor:primaryColor];
