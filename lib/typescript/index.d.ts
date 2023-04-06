@@ -10,9 +10,9 @@ declare type CustomizationType = {
     primaryColor?: string;
     textColor?: string;
     companyName?: string;
-    buttonCorners?: string,
-    buttonFontSize?: string,
-    buttonPaddings?: string,
+    buttonCorners?: number;
+    buttonFontSize?: number;
+    buttonPaddings?: number;
 };
 declare type CommonConfig = {
     sessionId: string;
@@ -28,9 +28,9 @@ declare type CommonConfig = {
     primaryColor?: string;
     textColor?: string;
     companyName?: string;
-    buttonCorners?: string,
-    buttonFontSize?: string,
-    buttonPaddings?: string,
+    buttonCorners?: number;
+    buttonFontSize?: number;
+    buttonPaddings?: number;
 };
 declare type CardOnFileSwitcherParams = CommonConfig;
 declare type SubscriptionCancelerParams = {

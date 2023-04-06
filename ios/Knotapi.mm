@@ -42,15 +42,15 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       }
 
       if ([params objectForKey:@"buttonCorners"]) {
-          buttonCorners = [NSNumber numberWithFloat:[[params objectForKey:@"buttonCorners"] floatValue]];
+          buttonCorners = [params objectForKey:@"buttonCorners"];
       }
 
       if ([params objectForKey:@"buttonFontSize"]) {
-          buttonFontSize = [NSNumber numberWithFloat:[[params objectForKey:@"buttonFontSize"] floatValue]];
+          buttonFontSize = [params objectForKey:@"buttonFontSize"];
       }
 
       if ([params objectForKey:@"buttonPaddings"]) {
-          buttonPaddings = [NSNumber numberWithFloat:[[params objectForKey:@"buttonPaddings"] floatValue]];
+          buttonPaddings = [params objectForKey:@"buttonPaddings"];
       }
 
       Environment environment = EnvironmentProduction;
@@ -113,15 +113,15 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
       if ([params objectForKey:@"buttonCorners"]) {
-          buttonCorners = [NSNumber numberWithFloat:[[params objectForKey:@"buttonCorners"] floatValue]];
+          buttonCorners = [params objectForKey:@"buttonCorners"];
       }
 
       if ([params objectForKey:@"buttonFontSize"]) {
-          buttonFontSize = [NSNumber numberWithFloat:[[params objectForKey:@"buttonFontSize"] floatValue]];
+          buttonFontSize = [params objectForKey:@"buttonFontSize"];
       }
 
       if ([params objectForKey:@"buttonPaddings"]) {
-          buttonPaddings = [NSNumber numberWithFloat:[[params objectForKey:@"buttonPaddings"] floatValue]];
+          buttonPaddings = [params objectForKey:@"buttonPaddings"];
       }
       if (params[@"customization"]) {
         NSDictionary *customization = [params objectForKey:@"customization"];

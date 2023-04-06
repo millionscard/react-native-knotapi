@@ -29,9 +29,9 @@ type CustomizationType = {
     primaryColor?: string
     textColor?: string
     companyName?: string,
-    buttonCorners?: string,
-    buttonFontSize?: string,
-    buttonPaddings?: string,
+    buttonCorners?: number,
+    buttonFontSize?: number,
+    buttonPaddings?: number,
 }
 type CommonConfig = {
     sessionId: string,
@@ -47,9 +47,9 @@ type CommonConfig = {
     primaryColor?: string,
     textColor?: string,
     companyName?: string,
-    buttonCorners?: string,
-    buttonFontSize?: string,
-    buttonPaddings?: string,
+    buttonCorners?: number,
+    buttonFontSize?: number,
+    buttonPaddings?: number,
 }
 type CardOnFileSwitcherParams = CommonConfig
 type SubscriptionCancelerParams = { amount?: boolean, } & CommonConfig

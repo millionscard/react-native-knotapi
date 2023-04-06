@@ -14,9 +14,9 @@ export default function App() {
             companyName: "Millions",
             primaryColor: "#5b138c",
             textColor: "#e0e0e0",
-            buttonCorners: "80",
-            buttonFontSize: "20",
-            buttonPaddings: "20",
+            buttonCorners: 80.3,
+            buttonFontSize: 20.4,
+            buttonPaddings: 20.4,
         })
     }
     const handleOpenSubscriptionCanceler = () => {
@@ -29,9 +29,9 @@ export default function App() {
             primaryColor: "#5b138c",
             textColor: "#e0e0e0",
             merchantIds: [44],
-            buttonCorners: "80",
-            buttonFontSize: "20",
-            buttonPaddings: "20",
+            buttonCorners: 80.3,
+            buttonFontSize: 20.4,
+            buttonPaddings: 20.4,
         })
     }
 
