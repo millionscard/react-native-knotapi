@@ -125,7 +125,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
-  implementation "com.knotapi.cardonfileswitcher:knotapi-android-sdk:1.0.34"
+  implementation "com.knotapi.cardonfileswitcher:knotapi-android-sdk:1.0.35"
 // From node_modules
 }
 
