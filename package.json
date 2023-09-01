@@ -1,6 +1,6 @@
 {
   "name": "react-native-knotapi",
-  "version": "0.1.56",
+  "version": "0.1.57",
   "description": "test",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
