@@ -26,6 +26,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
       NSString *environmentString = [params objectForKey:@"environment"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
+      BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
@@ -91,6 +92,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [session setMerchantNamesWithMerchantNames:merchantNames];
       [session setUseSelectionWithUseSelection: useSelection];
       [session setUseCategoriesWithUseCategories: useCategories];
+      [session setUseSearchWithUseSearch: useSearch];
       [session setUseSingleFlowWithUseSingleFlow: useSingleFlow];
       [session setLogoWithLogo: logo];
       [session openCardOnFileSwitcher];
@@ -109,6 +111,7 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       NSString *clientId = [params objectForKey:@"clientId"];
       NSString *environmentString = [params objectForKey:@"environment"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
+      BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
       BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
       NSString *logo = [params objectForKey:@"logo"];
@@ -171,6 +174,7 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
       [session setPrimaryColorWithPrimaryColor:primaryColor];
       [session setUseSelectionWithUseSelection: useSelection];
       [session setUseCategoriesWithUseCategories: useCategories];
+      [session setUseSearchWithUseSearch: useSearch];
       [session setUseSingleFlowWithUseSingleFlow: useSingleFlow];
       [session setLogoWithLogo: logo];
       [session openSubscriptionCanceler];

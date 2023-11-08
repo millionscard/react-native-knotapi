@@ -24,6 +24,7 @@ declare type CommonConfig = {
     useCategories?: boolean;
     logo?: string;
     useSelection?: boolean;
+    useSearch?: boolean;
     useSingleFlow?: boolean;
     primaryColor?: string;
     textColor?: string;
