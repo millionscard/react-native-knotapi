@@ -111,6 +111,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     @Nullable String primaryColor = params.hasKey("primaryColor") ? params.getString("primaryColor") : null;
     @Nullable String textColor = params.hasKey("textColor") ? params.getString("textColor") : null;
     boolean useCategories = params.hasKey("useCategories") ? params.getBoolean("useCategories") : false;
+    boolean useSearch = params.hasKey("useSearch") ? params.getBoolean("useSearch") : false;
     boolean useSelection = params.hasKey("useSelection") ? params.getBoolean("useSelection") : false;
     boolean useSingleFlow = params.hasKey("useSingleFlow") ? params.getBoolean("useSingleFlow") : false;
     boolean amount = params.hasKey("amount") ? params.getBoolean("amount") : false;
@@ -161,6 +162,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     options.setMerchantIds(merchantIdsArr);
     options.setMerchantNames(merchantNamesArr);
     options.setUseCategories(useCategories);
+    options.setUseSearch(useSearch);
     options.setUseSelection(useSelection);
     options.setUseSingleFlow(useSingleFlow);
     options.setLogo(logo);
