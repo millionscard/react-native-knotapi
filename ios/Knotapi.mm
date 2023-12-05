@@ -25,6 +25,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
       NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
       NSString *environmentString = [params objectForKey:@"environment"];
+      NSString *entryPoint = [params objectForKey:@"entryPoint"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
       BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
       BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
@@ -95,7 +96,12 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [session setUseSearchWithUseSearch: useSearch];
       [session setUseSingleFlowWithUseSingleFlow: useSingleFlow];
       [session setLogoWithLogo: logo];
-      [session openCardOnFileSwitcher];
+      if (entryPoint) {
+          [session openCardOnFileSwitcherWithEntryPoint:entryPoint];
+      } else {
+          [session openCardOnFileSwitcher];
+      }
+
   });
 }
 

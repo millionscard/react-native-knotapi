@@ -51,6 +51,7 @@ type CommonConfig = {
     buttonCorners?: number,
     buttonFontSize?: number,
     buttonPaddings?: number,
+    entryPoint?: string,
 }
 type CardOnFileSwitcherParams = CommonConfig
 type SubscriptionCancelerParams = { amount?: boolean, } & CommonConfig
