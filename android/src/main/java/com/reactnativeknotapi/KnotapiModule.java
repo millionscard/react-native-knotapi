@@ -174,11 +174,16 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
   public void openCardSwitcher(ReadableMap params) {
+    String entryPoint = params.getString("entryPoint");
     Configuration configuration = getConfiguration(params);
     Options options = getOptions(params);
     cardOnFileSwitcher = CardOnFileSwitcher.getInstance();
     cardOnFileSwitcher.init(context, configuration, options, getOnSessionEventListener("CardSwitcher-"));
-    cardOnFileSwitcher.openCardOnFileSwitcher();
+    if (entryPoint != null && !entryPoint.equals("")) {
+      cardOnFileSwitcher.openCardOnFileSwitcher(entryPoint);
+    } else {
+      cardOnFileSwitcher.openCardOnFileSwitcher();
+    }
   }
 
   @ReactMethod
