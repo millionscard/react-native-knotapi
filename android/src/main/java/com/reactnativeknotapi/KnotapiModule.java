@@ -187,6 +187,11 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void updateCardSwitcherSessionId(String sessionId) {
+    cardOnFileSwitcher.updateSession(sessionId);
+  }
+
+  @ReactMethod
   public void openSubscriptionCanceler(ReadableMap params) {
     Configuration configuration = getConfiguration(params);
     Options options = getOptions(params);

@@ -78,5 +78,8 @@ export const addSubscriptionCancelerListener = (eventName: EventNames, callback:
 export const addCardSwitcherListener = (eventName: EventNames, callback: (event: any) => void) => {
     return eventEmitter.addListener(`CardSwitcher-${eventName}`, callback)
 }
+export const updateCardSwitcherSessionId = (sessionId: string) => {
+    Knotapi?.updateCardSwitcherSessionId(sessionId);
+}
 
 export default Knotapi;
