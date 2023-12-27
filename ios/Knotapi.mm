@@ -6,6 +6,7 @@
 
 @interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
+@property (nonatomic, strong) CardOnFileSwitcherSession *cardOnFileSwitcherSession;
 @end
 
 @implementation Knotapi
@@ -62,7 +63,9 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       if ([environmentString isEqualToString:@"development"]) {
           environment = EnvironmentDevelopment;
       }
-      CardOnFileSwitcherSession *session = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
+      if (!self.cardOnFileSwitcherSession) {
+                self.cardOnFileSwitcherSession = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
+            }
       CardSwitcherConfiguration *config = [[CardSwitcherConfiguration alloc] init];
       [config setOnSuccessOnSuccess:^(NSString *merchant) {
           [self sendEventWithName:@"CardSwitcher-onSuccess" body:@{@"merchant": merchant}];
@@ -79,30 +82,34 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [config setOnFinishedOnFinished:^{
           [self sendEventWithName:@"CardSwitcher-onFinished" body:nil];
       }];
-      [session setConfigurationWithConfig:config];
-      [session setCompanyNameWithCompanyName:companyName];
+      [self.cardOnFileSwitcherSession setConfigurationWithConfig:config];
+      [self.cardOnFileSwitcherSession setCompanyNameWithCompanyName:companyName];
 
-      [session setButtonCornersWithButtonCorners:buttonCorners];
-      [session setButtonFontSizeWithButtonFontSize:buttonFontSize];
-      [session setButtonPaddingsWithButtonPaddings:buttonPaddings];
+      [self.cardOnFileSwitcherSession setButtonCornersWithButtonCorners:buttonCorners];
+      [self.cardOnFileSwitcherSession setButtonFontSizeWithButtonFontSize:buttonFontSize];
+      [self.cardOnFileSwitcherSession setButtonPaddingsWithButtonPaddings:buttonPaddings];
 
 
-      [session setTextColorWithTextColor:textColor];
-      [session setPrimaryColorWithPrimaryColor:primaryColor];
-      [session setMerchantIdsWithMerchantIds:merchantIds];
-      [session setMerchantNamesWithMerchantNames:merchantNames];
-      [session setUseSelectionWithUseSelection: useSelection];
-      [session setUseCategoriesWithUseCategories: useCategories];
-      [session setUseSearchWithUseSearch: useSearch];
-      [session setUseSingleFlowWithUseSingleFlow: useSingleFlow];
-      [session setLogoWithLogo: logo];
+      [self.cardOnFileSwitcherSession setTextColorWithTextColor:textColor];
+      [self.cardOnFileSwitcherSession setPrimaryColorWithPrimaryColor:primaryColor];
+      [self.cardOnFileSwitcherSession setMerchantIdsWithMerchantIds:merchantIds];
+      [self.cardOnFileSwitcherSession setMerchantNamesWithMerchantNames:merchantNames];
+      [self.cardOnFileSwitcherSession setUseSelectionWithUseSelection: useSelection];
+      [self.cardOnFileSwitcherSession setUseCategoriesWithUseCategories: useCategories];
+      [self.cardOnFileSwitcherSession setUseSearchWithUseSearch: useSearch];
+      [self.cardOnFileSwitcherSession setUseSingleFlowWithUseSingleFlow: useSingleFlow];
+      [self.cardOnFileSwitcherSession setLogoWithLogo: logo];
       if (entryPoint) {
-          [session openCardOnFileSwitcherWithEntryPoint:entryPoint];
+          [self.cardOnFileSwitcherSession openCardOnFileSwitcherWithEntryPoint:entryPoint];
       } else {
-          [session openCardOnFileSwitcher];
+          [self.cardOnFileSwitcherSession openCardOnFileSwitcher];
       }
 
   });
+}
+
+RCT_EXPORT_METHOD(updateCardSwitcherSessionId:(NSString *)sessionId){
+    [self.cardOnFileSwitcherSession updateSessionWithSessionId:sessionId];
 }
 
 RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
