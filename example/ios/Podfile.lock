@@ -301,7 +301,7 @@ PODS:
   - React-jsinspector (0.68.2)
   - React-logger (0.68.2):
     - glog
-  - react-native-knotapi (0.1.62):
+  - react-native-knotapi (0.1.63):
     - KnotAPI (~> 0.5.9)
     - React-Core
   - React-perflogger (0.68.2)
