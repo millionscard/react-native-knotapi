@@ -74,7 +74,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.11.0)
-  - KnotAPI (0.5.12)
+  - KnotAPI (0.5.13)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.06.28.00-v2):
@@ -302,7 +302,7 @@ PODS:
   - React-logger (0.68.2):
     - glog
   - react-native-knotapi (0.1.62):
-    - KnotAPI (~> 0.5.12)
+    - KnotAPI (~> 0.5.13)
     - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
