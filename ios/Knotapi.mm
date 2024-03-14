@@ -99,12 +99,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [self.cardOnFileSwitcherSession setUseSearchWithUseSearch: useSearch];
       [self.cardOnFileSwitcherSession setUseSingleFlowWithUseSingleFlow: useSingleFlow];
       [self.cardOnFileSwitcherSession setLogoWithLogo: logo];
-      if (entryPoint) {
-          [self.cardOnFileSwitcherSession openCardOnFileSwitcherWithEntryPoint:entryPoint];
-      } else {
-          [self.cardOnFileSwitcherSession openCardOnFileSwitcher];
-      }
-
+      [self.cardOnFileSwitcherSession openCardOnFileSwitcherWithEntryPoint:entryPoint];
   });
 }
 
