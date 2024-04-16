@@ -3,6 +3,7 @@
 #import "Knotapi.h"
 #import <React/RCTConvert.h>
 #import "KnotAPI/KnotAPI-Swift.h"
+#import <WebKit/WebKit.h>
 
 @interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
