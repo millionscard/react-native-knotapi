@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm}"
 
   s.dependency "React-Core"
-  s.dependency 'KnotAPI', '0.5.15'
+  s.dependency 'KnotAPI', '0.6.0'
 
 
   # Don't install the dependencies when we run `pod install` in the old architecture.
