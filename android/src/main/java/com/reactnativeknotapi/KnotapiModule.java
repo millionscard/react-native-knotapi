@@ -18,14 +18,12 @@ import com.knotapi.cardonfileswitcher.CardOnFileSwitcher;
 import com.knotapi.cardonfileswitcher.models.Configuration;
 import com.knotapi.cardonfileswitcher.models.Environment;
 import com.knotapi.cardonfileswitcher.interfaces.OnSessionEventListener;
-import com.knotapi.cardonfileswitcher.SubscriptionCanceler;
 import com.knotapi.cardonfileswitcher.models.Options;
 
 @ReactModule(name = KnotapiModule.NAME)
 public class KnotapiModule extends ReactContextBaseJavaModule {
   public static final String NAME = "Knotapi";
   CardOnFileSwitcher cardOnFileSwitcher;
-  SubscriptionCanceler subscriptionCanceler;
   Context context;
 
   public KnotapiModule(ReactApplicationContext reactContext) {
@@ -193,10 +191,6 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void openSubscriptionCanceler(ReadableMap params) {
-    Configuration configuration = getConfiguration(params);
-    Options options = getOptions(params);
-    subscriptionCanceler = subscriptionCanceler.getInstance();
-    subscriptionCanceler.init(context, configuration, options, getOnSessionEventListener("SubscriptionCanceler-"));
-    subscriptionCanceler.openSubscriptionCanceller();
+        // TODO: Invoke subscription canceler
   }
 }
