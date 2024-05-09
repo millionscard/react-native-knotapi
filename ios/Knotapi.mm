@@ -71,8 +71,12 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       [config setOnSuccessOnSuccess:^(NSString *merchant) {
           [self sendEventWithName:@"CardSwitcher-onSuccess" body:@{@"merchant": merchant}];
       }];
-      [config setOnEventOnEvent:^(NSString * event, NSString * message) {
-          [self sendEventWithName:@"CardSwitcher-onEvent" body:@{@"event": event, @"merchant": message}];
+      [config setOnEventOnEvent:^(NSString * _Nonnull event, NSString * _Nonnull message, NSString * _Nullable task_id) {
+          NSMutableDictionary *body = [@{@"event": event, @"merchant": message} mutableCopy];
+          if (task_id != nil) {
+              body[@"task_id"] = task_id;
+          }
+          [self sendEventWithName:@"CardSwitcher-onEvent" body:body];
       }];
       [config setOnErrorOnError:^(NSString * error, NSString * message) {
           [self sendEventWithName:@"CardSwitcher-onError" body:@{@"errorCode": error, @"errorMessage": message }];
