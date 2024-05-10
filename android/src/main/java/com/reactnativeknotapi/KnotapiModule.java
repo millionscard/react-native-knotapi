@@ -80,7 +80,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
         if (taskId != null && !taskId.trim().isEmpty()) {
            params.putString("taskId", taskId);
         }
-        sendEvent(getReactApplicationContext(), prefix + "onError", params);
+        sendEvent(getReactApplicationContext(), prefix + "onEvent", params);
       }
     };
   }
