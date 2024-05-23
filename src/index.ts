@@ -53,9 +53,7 @@ type CommonConfig = {
     buttonPaddings?: number,
     entryPoint?: string,
 }
-type CardOnFileSwitcherParams = CommonConfig
-type SubscriptionCancelerParams = { amount?: boolean, } & CommonConfig
-export const openCardOnFileSwitcher = (params: CardOnFileSwitcherParams) => {
+export const openCardOnFileSwitcher = (params: CommonConfig) => {
     InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
             Knotapi?.openCardSwitcher(params);
@@ -63,17 +61,17 @@ export const openCardOnFileSwitcher = (params: CardOnFileSwitcherParams) => {
     });
 }
 
-export const openSubscriptionCanceler = (params: SubscriptionCancelerParams) => {
+export const openSubscriptionManager = (params: CommonConfig) => {
     InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
-            Knotapi?.openSubscriptionCanceler(params);
+            Knotapi?.openSubscriptionManager(params);
         }, 50)
     });
 }
 
 type EventNames = keyof typeof eventNames
-export const addSubscriptionCancelerListener = (eventName: EventNames, callback: (event: any) => void) => {
-    return eventEmitter.addListener(`SubscriptionCanceler-${eventName}`, callback)
+export const addSubscriptionManagerListener = (eventName: EventNames, callback: (event: any) => void) => {
+    return eventEmitter.addListener(`SubscriptionManager-${eventName}`, callback)
 }
 export const addCardSwitcherListener = (eventName: EventNames, callback: (event: any) => void) => {
     return eventEmitter.addListener(`CardSwitcher-${eventName}`, callback)
