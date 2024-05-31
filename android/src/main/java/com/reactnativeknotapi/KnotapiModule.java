@@ -19,11 +19,13 @@ import com.knotapi.cardonfileswitcher.models.Configuration;
 import com.knotapi.cardonfileswitcher.models.Environment;
 import com.knotapi.cardonfileswitcher.interfaces.OnSessionEventListener;
 import com.knotapi.cardonfileswitcher.models.Options;
+import com.knotapi.cardonfileswitcher.SubscriptionManager;
 
 @ReactModule(name = KnotapiModule.NAME)
 public class KnotapiModule extends ReactContextBaseJavaModule {
   public static final String NAME = "Knotapi";
   CardOnFileSwitcher cardOnFileSwitcher;
+  SubscriptionManager subscriptionManager;
   Context context;
 
   public KnotapiModule(ReactApplicationContext reactContext) {
@@ -193,7 +195,21 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void openSubscriptionCanceler(ReadableMap params) {
-        // TODO: Invoke subscription canceler
+  public void openSubscriptionManager(ReadableMap params) {
+    String entryPoint = params.getString("entryPoint");
+    Configuration configuration = getConfiguration(params);
+    Options options = getOptions(params);
+    subscriptionManager = SubscriptionManager.getInstance();
+    subscriptionManager.init(context, configuration, options, getOnSessionEventListener("SubscriptionManager-"));
+    if (entryPoint != null && !entryPoint.equals("")) {
+      subscriptionManager.openSubscriptionManager(entryPoint);
+    } else {
+      subscriptionManager.openSubscriptionManager();
+    }
+  }
+
+  @ReactMethod
+  public void updateSubscriptionManagerSessionId(String sessionId) {
+    subscriptionManager.updateSession(sessionId);
   }
 }
