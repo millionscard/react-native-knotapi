@@ -7,7 +7,7 @@
 
 @interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
-@property (nonatomic, strong) CardOnFileSwitcherSession *cardOnFileSwitcherSession;
+@property (nonatomic, strong) KnotSession *cardOnFileSwitcherSession;
 @end
 
 @implementation Knotapi
@@ -64,52 +64,64 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       if ([environmentString isEqualToString:@"development"]) {
           environment = EnvironmentDevelopment;
       }
+      
       if (!self.cardOnFileSwitcherSession) {
-                self.cardOnFileSwitcherSession = [[CardOnFileSwitcherSession alloc] initWithSessionId:sessionId clientId:clientId environment:environment];
-            }
-      CardSwitcherConfiguration *config = [[CardSwitcherConfiguration alloc] init];
-      [config setOnSuccessOnSuccess:^(NSString *merchant) {
-          [self sendEventWithName:@"CardSwitcher-onSuccess" body:@{@"merchant": merchant}];
-      }];
-      [config setOnEventOnEvent:^(NSString * event, NSString * message, NSString * _Nullable taskId) {
+          self.cardOnFileSwitcherSession = [Knot createCardSwitcherSessionWithId:sessionId clientId:clientId environment:environment];
+      }
+
+      __weak Knotapi * weakSelf = self;
+
+      self.cardOnFileSwitcherSession.onSuccess = ^(NSString *merchant) {
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"CardSwitcher-onSuccess" body:@{@"merchant": merchant}];
+      };
+
+      self.cardOnFileSwitcherSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId) {
           NSMutableDictionary *body = [@{@"event": event, @"merchant": message} mutableCopy];
            if (taskId != nil) {
                body[@"taskId"] = taskId;
            }
-          [self sendEventWithName:@"CardSwitcher-onEvent" body:body];
-      }];
-      [config setOnErrorOnError:^(NSString * error, NSString * message) {
-          [self sendEventWithName:@"CardSwitcher-onError" body:@{@"errorCode": error, @"errorMessage": message }];
-      }];
-      [config setOnExitOnExit:^{
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"CardSwitcher-onEvent" body:body];
+      };
+
+      self.cardOnFileSwitcherSession.onError = ^(NSString * error, NSString * message) {
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"CardSwitcher-onError" body:@{@"errorCode": error, @"errorMessage": message }];
+      };
+
+      self.cardOnFileSwitcherSession.onExit = ^{
           [self sendEventWithName:@"CardSwitcher-onExit" body:nil];
-      }];
-      [config setOnFinishedOnFinished:^{
+      };
+
+      self.cardOnFileSwitcherSession.onFinished = ^{
           [self sendEventWithName:@"CardSwitcher-onFinished" body:nil];
-      }];
-      [self.cardOnFileSwitcherSession setConfigurationWithConfig:config];
-      [self.cardOnFileSwitcherSession setCompanyNameWithCompanyName:companyName];
+      };
 
-      [self.cardOnFileSwitcherSession setButtonCornersWithButtonCorners:buttonCorners];
-      [self.cardOnFileSwitcherSession setButtonFontSizeWithButtonFontSize:buttonFontSize];
-      [self.cardOnFileSwitcherSession setButtonPaddingsWithButtonPaddings:buttonPaddings];
+      self.cardOnFileSwitcherSession.companyName = companyName;
+
+      self.cardOnFileSwitcherSession.buttonCorners = buttonCorners;
+      self.cardOnFileSwitcherSession.buttonFontSize = buttonFontSize;
+      self.cardOnFileSwitcherSession.buttonPaddings = buttonPaddings;
 
 
-      [self.cardOnFileSwitcherSession setTextColorWithTextColor:textColor];
-      [self.cardOnFileSwitcherSession setPrimaryColorWithPrimaryColor:primaryColor];
-      [self.cardOnFileSwitcherSession setMerchantIdsWithMerchantIds:merchantIds];
-      [self.cardOnFileSwitcherSession setMerchantNamesWithMerchantNames:merchantNames];
-      [self.cardOnFileSwitcherSession setUseSelectionWithUseSelection: useSelection];
-      [self.cardOnFileSwitcherSession setUseCategoriesWithUseCategories: useCategories];
-      [self.cardOnFileSwitcherSession setUseSearchWithUseSearch: useSearch];
-      [self.cardOnFileSwitcherSession setUseSingleFlowWithUseSingleFlow: useSingleFlow];
-      [self.cardOnFileSwitcherSession setLogoWithLogo: logo];
-      [self.cardOnFileSwitcherSession openCardOnFileSwitcherWithEntryPoint:entryPoint];
+      self.cardOnFileSwitcherSession.textColor = textColor;
+      self.cardOnFileSwitcherSession.primaryColor = primaryColor;
+      self.cardOnFileSwitcherSession.merchantIds = merchantIds;
+      self.cardOnFileSwitcherSession.merchantNames = merchantNames;
+      self.cardOnFileSwitcherSession.useSelection = useSelection;
+      self.cardOnFileSwitcherSession.useCategories = useCategories;
+      self.cardOnFileSwitcherSession.useSearch = useSearch;
+      self.cardOnFileSwitcherSession.useSingleFlow = useSingleFlow;
+      self.cardOnFileSwitcherSession.logo = logo;
+      self.cardOnFileSwitcherSession.entryPoint = entryPoint;
+
+      [Knot openWithSession:self.cardOnFileSwitcherSession]
   });
 }
 
 RCT_EXPORT_METHOD(updateCardSwitcherSessionId:(NSString *)sessionId){
-    [self.cardOnFileSwitcherSession updateSessionWithSessionId:sessionId];
+    self.cardOnFileSwitcherSession.sessionId = sessionId;
 }
 
 RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
