@@ -116,7 +116,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       self.cardOnFileSwitcherSession.logo = logo;
       self.cardOnFileSwitcherSession.entryPoint = entryPoint;
 
-      [Knot openWithSession:self.cardOnFileSwitcherSession]
+      [Knot openWithSession:self.cardOnFileSwitcherSession];
   });
 }
 
