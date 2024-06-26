@@ -304,7 +304,7 @@ PODS:
   - React-logger (0.70.0):
     - glog
   - react-native-knotapi (0.1.77):
-    - KnotAPI (= 0.7.0)
+    - KnotAPI (= 0.7.1)
     - React-Core
   - React-perflogger (0.70.0)
   - React-RCTActionSheet (0.70.0):
