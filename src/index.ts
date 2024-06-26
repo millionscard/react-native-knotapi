@@ -25,32 +25,14 @@ export const eventNames = {
 
 const eventEmitter = new NativeEventEmitter(Knotapi)
 
-type CustomizationType = {
-    primaryColor?: string
-    textColor?: string
-    companyName?: string,
-    buttonCorners?: number,
-    buttonFontSize?: number,
-    buttonPaddings?: number,
-}
 type CommonConfig = {
     sessionId: string,
     clientId: string,
     merchantIds?: number[],
     merchantNames?: string[],
-    customization?: CustomizationType,
     environment: 'production' | 'sandbox' | 'development',
     useCategories?: boolean,
-    logo?: string,
-    useSelection?: boolean,
     useSearch?: boolean,
-    useSingleFlow?: boolean,
-    primaryColor?: string,
-    textColor?: string,
-    companyName?: string,
-    buttonCorners?: number,
-    buttonFontSize?: number,
-    buttonPaddings?: number,
     entryPoint?: string,
 }
 type CardOnFileSwitcherParams = CommonConfig
