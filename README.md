@@ -12,7 +12,7 @@ npm install react-native-knotapi
 import { openCardOnFileSwitcher, addListener, eventNames } from "react-native-knotapi";
 
 openCardOnFileSwitcher({
-  sessionId: SESSION_ID, clientId: CLIENT_ID, customization: {companyName: COMPANY_NAME})
+  sessionId: SESSION_ID, clientId: CLIENT_ID})
   ```
 
 ## Contributing
