@@ -32,10 +32,12 @@ declare type CommonConfig = {
     buttonCorners?: number;
     buttonFontSize?: number;
     buttonPaddings?: number;
+    entryPoint?: string;
 };
 export declare const openCardOnFileSwitcher: (params: CommonConfig) => void;
 export declare const openSubscriptionManager: (params: CommonConfig) => void;
 declare type EventNames = keyof typeof eventNames;
 export declare const addSubscriptionManagerListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
 export declare const addCardSwitcherListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
+export declare const updateCardSwitcherSessionId: (sessionId: string) => void;
 export default Knotapi;
