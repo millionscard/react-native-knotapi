@@ -146,7 +146,7 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
 }
 
 RCT_EXPORT_METHOD(updateSubscriptionManagerSessionId:(NSString *)sessionId){
-    [self.subscriptionManagerSession updateSessionWithSessionId:sessionId];
+    self.subscriptionManagerSession.sessionId = sessionId;
 }
 
 - (NSArray<NSString *> *)supportedEvents
