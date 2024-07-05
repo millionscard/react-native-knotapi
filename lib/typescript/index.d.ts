@@ -6,32 +6,15 @@ export declare const eventNames: {
     readonly onExit: "onExit";
     readonly onFinished: "onFinished";
 };
-declare type CustomizationType = {
-    primaryColor?: string;
-    textColor?: string;
-    companyName?: string;
-    buttonCorners?: number;
-    buttonFontSize?: number;
-    buttonPaddings?: number;
-};
+
 declare type CommonConfig = {
     sessionId: string;
     clientId: string;
     merchantIds?: number[];
     merchantNames?: string[];
-    customization?: CustomizationType;
     environment: 'production' | 'sandbox' | 'development';
     useCategories?: boolean;
-    logo?: string;
-    useSelection?: boolean;
     useSearch?: boolean;
-    useSingleFlow?: boolean;
-    primaryColor?: string;
-    textColor?: string;
-    companyName?: string;
-    buttonCorners?: number;
-    buttonFontSize?: number;
-    buttonPaddings?: number;
     entryPoint?: string;
 };
 export declare const openCardOnFileSwitcher: (params: CommonConfig) => void;
