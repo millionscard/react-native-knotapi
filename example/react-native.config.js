@@ -1,14 +1,8 @@
 const path = require('path');
-const pak = require('../package.json');
 
 module.exports = {
-  project: {
-    ios: {
-      automaticPodsInstallation: true,
-    },
-  },
   dependencies: {
-    [pak.name]: {
+    'react-native-knotapi': {
       root: path.join(__dirname, '..'),
     },
   },

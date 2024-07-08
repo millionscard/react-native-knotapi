@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Pressable, StyleSheet, View, Text } from 'react-native';
 import {
   openCardOnFileSwitcher,
@@ -19,9 +21,10 @@ export default function App() {
   };
   const handleOpenSubscriptionManager = () => {
     openSubscriptionManager({
-      sessionId: '1803be4d-cd44-49b5-8f69-21a48ed19a45',
+      sessionId: '0e3db0c1-0703-4df9-96d9-4cadf9ecaca4',
       clientId: 'ab86955e-22f4-49c3-97d7-369973f4cb9e',
-      environment: 'sandbox',
+      environment: 'development',
+      merchantIds: [44],
     });
   };
 
