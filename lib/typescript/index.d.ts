@@ -17,14 +17,10 @@ declare type CommonConfig = {
     useSearch?: boolean;
     entryPoint?: string;
 };
-declare type CardOnFileSwitcherParams = CommonConfig;
-declare type SubscriptionCancelerParams = {
-    amount?: boolean;
-} & CommonConfig;
-export declare const openCardOnFileSwitcher: (params: CardOnFileSwitcherParams) => void;
-export declare const openSubscriptionCanceler: (params: SubscriptionCancelerParams) => void;
+export declare const openCardOnFileSwitcher: (params: CommonConfig) => void;
+export declare const openSubscriptionManager: (params: CommonConfig) => void;
 declare type EventNames = keyof typeof eventNames;
-export declare const addSubscriptionCancelerListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
+export declare const addSubscriptionManagerListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
 export declare const addCardSwitcherListener: (eventName: EventNames, callback: (event: any) => void) => import("react-native").EmitterSubscription;
 export declare const updateCardSwitcherSessionId: (sessionId: string) => void;
 export default Knotapi;

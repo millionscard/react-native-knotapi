@@ -8,6 +8,7 @@
 @interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
 @property (nonatomic, strong) KnotSession *cardOnFileSwitcherSession;
+@property (nonatomic, strong) KnotSession *subscriptionManagerSession;
 @end
 
 @implementation Knotapi
@@ -80,15 +81,77 @@ RCT_EXPORT_METHOD(updateCardSwitcherSessionId:(NSString *)sessionId){
     self.cardOnFileSwitcherSession.sessionId = sessionId;
 }
 
-RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
+RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
-      //TODO: invoke native method for subscription manager
-  });
+      NSString *sessionId = [params objectForKey:@"sessionId"];
+      NSString *clientId = [params objectForKey:@"clientId"];
+      NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
+      NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
+      NSString *environmentString = [params objectForKey:@"environment"];
+      NSString *entryPoint = [params objectForKey:@"entryPoint"];
+      BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
+      BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
+
+      Environment environment = EnvironmentProduction;
+      if ([environmentString isEqualToString:@"sandbox"]) {
+          environment = EnvironmentSandbox;
+      }
+
+      if ([environmentString isEqualToString:@"development"]) {
+          environment = EnvironmentDevelopment;
+      }
+
+      if (!self.subscriptionManagerSession) {
+          self.subscriptionManagerSession = [Knot createSubscriptionManagerSessionWithId:sessionId clientId:clientId environment:environment];
+      }
+
+      __weak Knotapi * weakSelf = self;
+
+      self.subscriptionManagerSession.onSuccess = ^(NSString *merchant) {
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"SubscriptionManager-onSuccess" body:@{@"merchant": merchant}];
+      };
+
+      self.subscriptionManagerSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId) {
+          NSMutableDictionary *body = [@{@"event": event, @"merchant": message} mutableCopy];
+           if (taskId != nil) {
+               body[@"taskId"] = taskId;
+           }
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"SubscriptionManager-onEvent" body:body];
+      };
+
+      self.subscriptionManagerSession.onError = ^(NSString * error, NSString * message) {
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"SubscriptionManager-onError" body:@{@"errorCode": error, @"errorMessage": message }];
+      };
+
+      self.subscriptionManagerSession.onExit = ^{
+          [self sendEventWithName:@"SubscriptionManager-onExit" body:nil];
+      };
+
+      self.subscriptionManagerSession.onFinished = ^{
+          [self sendEventWithName:@"SubscriptionManager-onFinished" body:nil];
+      };
+
+      self.subscriptionManagerSession.merchantIds = merchantIds;
+      self.subscriptionManagerSession.merchantNames = merchantNames;
+      self.subscriptionManagerSession.useCategories = useCategories;
+      self.subscriptionManagerSession.useSearch = useSearch;
+      self.subscriptionManagerSession.entryPoint = entryPoint;
+
+      [Knot openWithSession:self.subscriptionManagerSession];
+
+    });
+}
+
+RCT_EXPORT_METHOD(updateSubscriptionManagerSessionId:(NSString *)sessionId){
+    self.subscriptionManagerSession.sessionId = sessionId;
 }
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"CardSwitcher-onFinished", @"SubscriptionCanceler-onSuccess", @"SubscriptionCanceler-onError", @"SubscriptionCanceler-onEvent", @"SubscriptionCanceler-onExit", @"SubscriptionCanceler-onFinished"];
+  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"CardSwitcher-onFinished", @"SubscriptionManager-onSuccess", @"SubscriptionManager-onError", @"SubscriptionManager-onEvent", @"SubscriptionManager-onExit", @"SubscriptionManager-onFinished"];
 }
 
 @end
