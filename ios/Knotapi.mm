@@ -97,9 +97,7 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
           environment = EnvironmentDevelopment;
       }
 
-      if (!self.subscriptionManagerSession) {
-          self.subscriptionManagerSession = [Knot createSubscriptionManagerSessionWithId:sessionId clientId:clientId environment:environment];
-      }
+      self.subscriptionManagerSession = [Knot createSubscriptionManagerSessionWithId:sessionId clientId:clientId environment:environment];
 
       __weak Knotapi * weakSelf = self;
 
