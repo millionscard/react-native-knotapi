@@ -1,5 +1,7 @@
 # react-native-knotapi
-Change Card on File Information, Cancel Subscriptions, Change Passwords, and more via Knot.
+
+Knot is for when there's knot an API - change card on file information, cancel subscriptions, change passwords, and more.
+
 ## Installation
 
 ```sh
@@ -8,12 +10,15 @@ npm install react-native-knotapi
 
 ## Usage
 
-```js
-import { openCardOnFileSwitcher, addListener, eventNames } from "react-native-knotapi";
 
-openCardOnFileSwitcher({
-  sessionId: SESSION_ID, clientId: CLIENT_ID, customization: {companyName: COMPANY_NAME})
-  ```
+```js
+import { multiply } from 'react-native-knotapi';
+
+// ...
+
+const result = await multiply(3, 7);
+```
+
 
 ## Contributing
 

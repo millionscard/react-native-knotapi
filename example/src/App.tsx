@@ -1,11 +1,9 @@
-import * as React from 'react';
-
 import { Pressable, StyleSheet, View, Text } from 'react-native';
 import {
   openCardOnFileSwitcher,
-  openSubscriptionCanceler,
+  openSubscriptionManager,
   addCardSwitcherListener,
-  addSubscriptionCancelerListener,
+  addSubscriptionManagerListener,
   updateCardSwitcherSessionId,
 } from 'react-native-knotapi';
 import { useEffect } from 'react';
@@ -16,28 +14,14 @@ export default function App() {
       sessionId: '5484d1d3-6740-494f-af07-33d520afb0f1',
       clientId: '3f4acb6b-a8c9-47bc-820c-b0eaf24ee771',
       environment: 'sandbox',
-      companyName: 'Millions',
-      primaryColor: '#5b138c',
-      textColor: '#e0e0e0',
       useSearch: true,
-      buttonCorners: 80.3,
-      buttonFontSize: 20.4,
-      buttonPaddings: 20.4,
     });
   };
-  const handleOpenSubscriptionCanceler = () => {
-    openSubscriptionCanceler({
-      sessionId: '0e3db0c1-0703-4df9-96d9-4cadf9ecaca4',
+  const handleOpenSubscriptionManager = () => {
+    openSubscriptionManager({
+      sessionId: '1803be4d-cd44-49b5-8f69-21a48ed19a45',
       clientId: 'ab86955e-22f4-49c3-97d7-369973f4cb9e',
-      environment: 'development',
-      amount: true,
-      companyName: 'Millions',
-      primaryColor: '#5b138c',
-      textColor: '#e0e0e0',
-      merchantIds: [44],
-      buttonCorners: 80.3,
-      buttonFontSize: 20.4,
-      buttonPaddings: 20.4,
+      environment: 'sandbox',
     });
   };
 
@@ -48,7 +32,7 @@ export default function App() {
         console.log('onSuccess', 'event', event);
       }
     );
-    const emitterSwitcher = addSubscriptionCancelerListener(
+    const emitterSwitcher = addSubscriptionManagerListener(
       'onSuccess',
       (event) => {
         console.log('onSuccess subscription', 'event', event);
@@ -72,8 +56,8 @@ export default function App() {
       <Pressable onPress={handleOpenCardSwitcher} style={styles.button}>
         <Text style={styles.textButton}>Open Card on file switcher</Text>
       </Pressable>
-      <Pressable onPress={handleOpenSubscriptionCanceler} style={styles.button}>
-        <Text style={styles.textButton}>Open Subscription canceler</Text>
+      <Pressable onPress={handleOpenSubscriptionManager} style={styles.button}>
+        <Text style={styles.textButton}>Open Subscription manager</Text>
       </Pressable>
     </View>
   );

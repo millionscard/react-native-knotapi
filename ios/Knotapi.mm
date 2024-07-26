@@ -1,5 +1,3 @@
-// Knotapi.m
-
 #import "Knotapi.h"
 #import <React/RCTConvert.h>
 #import "KnotAPI/KnotAPI-Swift.h"
@@ -8,6 +6,7 @@
 @interface Knotapi ()
 @property (nonatomic, strong) UIViewController* presentingViewController;
 @property (nonatomic, strong) KnotSession *cardOnFileSwitcherSession;
+@property (nonatomic, strong) KnotSession *subscriptionManagerSession;
 @end
 
 @implementation Knotapi
@@ -16,12 +15,6 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
-      NSString *companyName = nil;
-      NSString *textColor = nil;
-      NSString *primaryColor = nil;
-      NSNumber *buttonCorners = @(0.0);
-      NSNumber *buttonFontSize = @(0.0);
-      NSNumber *buttonPaddings = @(0.0);
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
       NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
@@ -30,32 +23,6 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *entryPoint = [params objectForKey:@"entryPoint"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
       BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
-      BOOL useSelection = [[params objectForKey:@"useSelection"] boolValue];
-      BOOL useSingleFlow = [[params objectForKey:@"useSingleFlow"] boolValue];
-      NSString *logo = [params objectForKey:@"logo"];
-
-      if (params[@"customization"]) {
-        NSDictionary *customization = [params objectForKey:@"customization"];
-        companyName = [customization objectForKey:@"companyName"];
-        textColor = [customization objectForKey:@"textColor"];
-        primaryColor = [customization objectForKey:@"primaryColor"];
-      } else {
-        companyName = [params objectForKey:@"companyName"];
-        textColor = [params objectForKey:@"textColor"];
-        primaryColor = [params objectForKey:@"primaryColor"];
-      }
-
-      if ([params objectForKey:@"buttonCorners"]) {
-          buttonCorners = [params objectForKey:@"buttonCorners"];
-      }
-
-      if ([params objectForKey:@"buttonFontSize"]) {
-          buttonFontSize = [params objectForKey:@"buttonFontSize"];
-      }
-
-      if ([params objectForKey:@"buttonPaddings"]) {
-          buttonPaddings = [params objectForKey:@"buttonPaddings"];
-      }
 
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
@@ -64,7 +31,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       if ([environmentString isEqualToString:@"development"]) {
           environment = EnvironmentDevelopment;
       }
-      
+
       if (!self.cardOnFileSwitcherSession) {
           self.cardOnFileSwitcherSession = [Knot createCardSwitcherSessionWithId:sessionId clientId:clientId environment:environment];
       }
@@ -98,22 +65,10 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
           [self sendEventWithName:@"CardSwitcher-onFinished" body:nil];
       };
 
-      self.cardOnFileSwitcherSession.companyName = companyName;
-
-      self.cardOnFileSwitcherSession.buttonCorners = buttonCorners;
-      self.cardOnFileSwitcherSession.buttonFontSize = buttonFontSize;
-      self.cardOnFileSwitcherSession.buttonPaddings = buttonPaddings;
-
-
-      self.cardOnFileSwitcherSession.textColor = textColor;
-      self.cardOnFileSwitcherSession.primaryColor = primaryColor;
       self.cardOnFileSwitcherSession.merchantIds = merchantIds;
       self.cardOnFileSwitcherSession.merchantNames = merchantNames;
-      self.cardOnFileSwitcherSession.useSelection = useSelection;
       self.cardOnFileSwitcherSession.useCategories = useCategories;
       self.cardOnFileSwitcherSession.useSearch = useSearch;
-      self.cardOnFileSwitcherSession.useSingleFlow = useSingleFlow;
-      self.cardOnFileSwitcherSession.logo = logo;
       self.cardOnFileSwitcherSession.entryPoint = entryPoint;
 
       [Knot openWithSession:self.cardOnFileSwitcherSession];
@@ -124,15 +79,77 @@ RCT_EXPORT_METHOD(updateCardSwitcherSessionId:(NSString *)sessionId){
     self.cardOnFileSwitcherSession.sessionId = sessionId;
 }
 
-RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
+RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
-      //TODO: invoke native method for subscription manager
-  });
+      NSString *sessionId = [params objectForKey:@"sessionId"];
+      NSString *clientId = [params objectForKey:@"clientId"];
+      NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
+      NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
+      NSString *environmentString = [params objectForKey:@"environment"];
+      NSString *entryPoint = [params objectForKey:@"entryPoint"];
+      BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
+      BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
+
+      Environment environment = EnvironmentProduction;
+      if ([environmentString isEqualToString:@"sandbox"]) {
+          environment = EnvironmentSandbox;
+      }
+
+      if ([environmentString isEqualToString:@"development"]) {
+          environment = EnvironmentDevelopment;
+      }
+
+      if (!self.subscriptionManagerSession) {
+          self.subscriptionManagerSession = [Knot createSubscriptionManagerSessionWithId:sessionId clientId:clientId environment:environment];
+      }
+
+      __weak Knotapi * weakSelf = self;
+
+      self.subscriptionManagerSession.onSuccess = ^(NSString *merchant) {
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"SubscriptionManager-onSuccess" body:@{@"merchant": merchant}];
+      };
+
+      self.subscriptionManagerSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId) {
+          NSMutableDictionary *body = [@{@"event": event, @"merchant": message} mutableCopy];
+           if (taskId != nil) {
+               body[@"taskId"] = taskId;
+           }
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"SubscriptionManager-onEvent" body:body];
+      };
+
+      self.subscriptionManagerSession.onError = ^(NSString * error, NSString * message) {
+          Knotapi * strongSelf = weakSelf;
+          [strongSelf sendEventWithName:@"SubscriptionManager-onError" body:@{@"errorCode": error, @"errorMessage": message }];
+      };
+
+      self.subscriptionManagerSession.onExit = ^{
+          [self sendEventWithName:@"SubscriptionManager-onExit" body:nil];
+      };
+
+      self.subscriptionManagerSession.onFinished = ^{
+          [self sendEventWithName:@"SubscriptionManager-onFinished" body:nil];
+      };
+
+      self.subscriptionManagerSession.merchantIds = merchantIds;
+      self.subscriptionManagerSession.merchantNames = merchantNames;
+      self.subscriptionManagerSession.useCategories = useCategories;
+      self.subscriptionManagerSession.useSearch = useSearch;
+      self.subscriptionManagerSession.entryPoint = entryPoint;
+
+      [Knot openWithSession:self.subscriptionManagerSession];
+
+    });
+}
+
+RCT_EXPORT_METHOD(updateSubscriptionManagerSessionId:(NSString *)sessionId){
+    self.subscriptionManagerSession.sessionId = sessionId;
 }
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"CardSwitcher-onFinished", @"SubscriptionCanceler-onSuccess", @"SubscriptionCanceler-onError", @"SubscriptionCanceler-onEvent", @"SubscriptionCanceler-onExit", @"SubscriptionCanceler-onFinished"];
+  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"CardSwitcher-onFinished", @"SubscriptionManager-onSuccess", @"SubscriptionManager-onError", @"SubscriptionManager-onEvent", @"SubscriptionManager-onExit", @"SubscriptionManager-onFinished"];
 }
 
 @end
