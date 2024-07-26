@@ -32,9 +32,7 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
           environment = EnvironmentDevelopment;
       }
 
-      if (!self.cardOnFileSwitcherSession) {
-          self.cardOnFileSwitcherSession = [Knot createCardSwitcherSessionWithId:sessionId clientId:clientId environment:environment];
-      }
+      self.cardOnFileSwitcherSession = [Knot createCardSwitcherSessionWithId:sessionId clientId:clientId environment:environment];
 
       __weak Knotapi * weakSelf = self;
 
