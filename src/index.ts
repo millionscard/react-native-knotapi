@@ -20,7 +20,6 @@ export const eventNames = {
     onError: 'onError',
     onEvent: 'onEvent',
     onExit: 'onExit',
-    onFinished: 'onFinished'
 } as const;
 
 const eventEmitter = new NativeEventEmitter(Knotapi)

@@ -4,7 +4,6 @@ export declare const eventNames: {
     readonly onError: "onError";
     readonly onEvent: "onEvent";
     readonly onExit: "onExit";
-    readonly onFinished: "onFinished";
 };
 
 declare type CommonConfig = {

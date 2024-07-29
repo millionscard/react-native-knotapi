@@ -62,10 +62,6 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
           [self sendEventWithName:@"CardSwitcher-onExit" body:nil];
       };
 
-      self.cardOnFileSwitcherSession.onFinished = ^{
-          [self sendEventWithName:@"CardSwitcher-onFinished" body:nil];
-      };
-
       self.cardOnFileSwitcherSession.merchantIds = merchantIds;
       self.cardOnFileSwitcherSession.merchantNames = merchantNames;
       self.cardOnFileSwitcherSession.useCategories = useCategories;
@@ -88,7 +84,7 @@ RCT_EXPORT_METHOD(openSubscriptionCanceler:(NSDictionary *)params){
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"CardSwitcher-onFinished", @"SubscriptionCanceler-onSuccess", @"SubscriptionCanceler-onError", @"SubscriptionCanceler-onEvent", @"SubscriptionCanceler-onExit", @"SubscriptionCanceler-onFinished"];
+  return @[@"CardSwitcher-onSuccess", @"CardSwitcher-onError", @"CardSwitcher-onEvent", @"CardSwitcher-onExit", @"SubscriptionCanceler-onSuccess", @"SubscriptionCanceler-onError", @"SubscriptionCanceler-onEvent", @"SubscriptionCanceler-onExit"];
 }
 
 @end
