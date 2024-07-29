@@ -70,11 +70,6 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       }
 
       @Override
-      public void onFinished() {
-        sendEvent(getReactApplicationContext(), prefix + "onFinished", null);
-      }
-
-      @Override
       public void onEvent(String eventName, String merchantName, String taskId) {
         WritableMap params = Arguments.createMap();
         params.putString("event", eventName);
