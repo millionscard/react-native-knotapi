@@ -22,7 +22,11 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *environmentString = [params objectForKey:@"environment"];
       NSString *entryPoint = [params objectForKey:@"entryPoint"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
-      BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
+      BOOL useSearch = true; // default value is true
+      id useSearchValue = [params objectForKey:@"useSearch"];
+      if (useSearchValue != nil) {
+          useSearch = [useSearchValue boolValue];
+      }
 
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {
@@ -82,7 +86,11 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
       NSString *environmentString = [params objectForKey:@"environment"];
       NSString *entryPoint = [params objectForKey:@"entryPoint"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
-      BOOL useSearch = [[params objectForKey:@"useSearch"] boolValue];
+      BOOL useSearch = true; // default value is true
+      id useSearchValue = [params objectForKey:@"useSearch"];
+      if (useSearchValue != nil) {
+          useSearch = [useSearchValue boolValue];
+      }
 
       Environment environment = EnvironmentProduction;
       if ([environmentString isEqualToString:@"sandbox"]) {

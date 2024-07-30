@@ -14,7 +14,6 @@ export default function App() {
       sessionId: '5484d1d3-6740-494f-af07-33d520afb0f1',
       clientId: '3f4acb6b-a8c9-47bc-820c-b0eaf24ee771',
       environment: 'sandbox',
-      useSearch: true,
     });
   };
   const handleOpenSubscriptionManager = () => {
