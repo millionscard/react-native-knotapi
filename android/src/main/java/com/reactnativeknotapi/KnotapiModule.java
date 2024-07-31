@@ -119,20 +119,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       merchantIdsArr = new int[]{};
     }
 
-    @Nullable String[] merchantNamesArr;
-    if (params.hasKey("merchantNames")) {
-      ReadableArray merchantNames = params.getArray("merchantNames");
-      // convert ReadableArray merchants to array of int
-      merchantNamesArr = new String[merchantNames.size()];
-      for (int i = 0; i < merchantNames.size(); i++) {
-        merchantNamesArr[i] = merchantNames.getString(i);
-      }
-    } else {
-      merchantNamesArr = new String[]{};
-    }
-
     options.setMerchantIds(merchantIdsArr);
-    options.setMerchantNames(merchantNamesArr);
     options.setUseCategories(useCategories);
     options.setUseSearch(useSearch);
 
