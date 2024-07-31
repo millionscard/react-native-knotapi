@@ -18,7 +18,6 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
       NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
-      NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
       NSString *environmentString = [params objectForKey:@"environment"];
       NSString *entryPoint = [params objectForKey:@"entryPoint"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
@@ -64,7 +63,6 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
       };
 
       self.cardOnFileSwitcherSession.merchantIds = merchantIds;
-      self.cardOnFileSwitcherSession.merchantNames = merchantNames;
       self.cardOnFileSwitcherSession.useCategories = useCategories;
       self.cardOnFileSwitcherSession.useSearch = useSearch;
       self.cardOnFileSwitcherSession.entryPoint = entryPoint;
@@ -82,7 +80,6 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
       NSString *sessionId = [params objectForKey:@"sessionId"];
       NSString *clientId = [params objectForKey:@"clientId"];
       NSArray<NSNumber*> *merchantIds = [params objectForKey:@"merchantIds"];
-      NSArray<NSString*> *merchantNames = [params objectForKey:@"merchantNames"];
       NSString *environmentString = [params objectForKey:@"environment"];
       NSString *entryPoint = [params objectForKey:@"entryPoint"];
       BOOL useCategories = [[params objectForKey:@"useCategories"] boolValue];
@@ -129,7 +126,6 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
       };
 
       self.subscriptionManagerSession.merchantIds = merchantIds;
-      self.subscriptionManagerSession.merchantNames = merchantNames;
       self.subscriptionManagerSession.useCategories = useCategories;
       self.subscriptionManagerSession.useSearch = useSearch;
       self.subscriptionManagerSession.entryPoint = entryPoint;

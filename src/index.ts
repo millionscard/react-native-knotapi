@@ -35,7 +35,6 @@ type CommonConfig = {
   sessionId: string;
   clientId: string;
   merchantIds?: number[];
-  merchantNames?: string[];
   environment: 'production' | 'sandbox' | 'development';
   useCategories?: boolean;
   useSearch?: boolean;
