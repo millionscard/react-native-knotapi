@@ -103,7 +103,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
 
   public @Nullable Options getOptions(ReadableMap params) {
     boolean useCategories = params.hasKey("useCategories") ? params.getBoolean("useCategories") : false;
-    boolean useSearch = params.hasKey("useSearch") ? params.getBoolean("useSearch") : false;
+    boolean useSearch = params.hasKey("useSearch") ? params.getBoolean("useSearch") : true;
     boolean amount = params.hasKey("amount") ? params.getBoolean("amount") : false;
     @Nullable Options options = new Options();
 
