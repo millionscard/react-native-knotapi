@@ -71,10 +71,6 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   });
 }
 
-RCT_EXPORT_METHOD(updateCardSwitcherSessionId:(NSString *)sessionId){
-    self.cardOnFileSwitcherSession.sessionId = sessionId;
-}
-
 RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
       NSString *sessionId = [params objectForKey:@"sessionId"];
@@ -133,10 +129,6 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
       [Knot openWithSession:self.subscriptionManagerSession];
 
     });
-}
-
-RCT_EXPORT_METHOD(updateSubscriptionManagerSessionId:(NSString *)sessionId){
-    self.subscriptionManagerSession.sessionId = sessionId;
 }
 
 - (NSArray<NSString *> *)supportedEvents

@@ -143,11 +143,6 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void updateCardSwitcherSessionId(String sessionId) {
-    cardOnFileSwitcher.updateSession(sessionId);
-  }
-
-  @ReactMethod
   public void openSubscriptionManager(ReadableMap params) {
     String entryPoint = params.getString("entryPoint");
     Configuration configuration = getConfiguration(params);
@@ -159,10 +154,5 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     } else {
       subscriptionManager.openSubscriptionManager();
     }
-  }
-
-  @ReactMethod
-  public void updateSubscriptionManagerSessionId(String sessionId) {
-    subscriptionManager.updateSession(sessionId);
   }
 }

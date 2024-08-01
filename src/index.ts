@@ -69,8 +69,5 @@ export const addCardSwitcherListener = (
 ) => {
   return eventEmitter.addListener(`CardSwitcher-${eventName}`, callback);
 };
-export const updateCardSwitcherSessionId = (sessionId: string) => {
-  Knotapi?.updateCardSwitcherSessionId(sessionId);
-};
 
 export default Knotapi;
