@@ -4,7 +4,6 @@ import {
   openSubscriptionManager,
   addCardSwitcherListener,
   addSubscriptionManagerListener,
-  updateCardSwitcherSessionId,
 } from 'react-native-knotapi';
 import { useEffect } from 'react';
 
@@ -39,9 +38,7 @@ export default function App() {
     );
 
     const emitterSwitcherEvent = addCardSwitcherListener('onEvent', (event) => {
-      if (event === 'RefreshSessionRequest') {
-        updateCardSwitcherSessionId('0e3db0c1-0703-4df9-96d9-4cadf9ecaca4');
-      }
+      console.log('onEvent switcher', 'event', event);
     });
     return () => {
       emitterSubscription.remove();
