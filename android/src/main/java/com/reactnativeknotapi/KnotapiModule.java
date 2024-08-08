@@ -119,7 +119,20 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       merchantIdsArr = new int[]{};
     }
 
+    @Nullable String[] domainUrlsArr;
+    if (params.hasKey("domainUrls")) {
+      ReadableArray domainUrls = params.getArray("domainUrls");
+      // convert ReadableArray domainUrls to array of string
+      domainUrlsArr = new String[domainUrls.size()];
+      for (int i = 0; i < domainUrls.size(); i++) {
+        domainUrlsArr[i] = domainUrls.getString(i);
+      }
+    } else {
+      domainUrlsArr = new String[]{};
+    }
+
     options.setMerchantIds(merchantIdsArr);
+    options.setDomainUrls(domainUrlsArr);
     options.setUseCategories(useCategories);
     options.setUseSearch(useSearch);
 
