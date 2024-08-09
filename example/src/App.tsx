@@ -4,7 +4,7 @@ import {
   openSubscriptionManager,
   addCardSwitcherListener,
   addSubscriptionManagerListener,
-} from 'react-native-knotapi';
+} from '../../src/index';
 import { useEffect } from 'react';
 
 export default function App() {
