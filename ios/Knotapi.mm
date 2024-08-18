@@ -13,6 +13,12 @@
 
 RCT_EXPORT_MODULE()
 
+RCT_EXPORT_METHOD(closeKnotSDK){
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [Knot close];
+    });
+}
+
 RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
   dispatch_async(dispatch_get_main_queue(), ^{
       NSString *sessionId = [params objectForKey:@"sessionId"];

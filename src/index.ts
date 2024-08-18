@@ -49,6 +49,10 @@ export const openCardOnFileSwitcher = (params: CommonConfig) => {
   });
 };
 
+export const closeKnotSDK = () => {
+  Knotapi?.closeKnotSDK();
+};
+
 export const openSubscriptionManager = (params: CommonConfig) => {
   InteractionManager.runAfterInteractions(() => {
     setTimeout(() => {

@@ -27,6 +27,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
   CardOnFileSwitcher cardOnFileSwitcher;
   SubscriptionManager subscriptionManager;
   Context context;
+  String product = "card_switcher";
 
   public KnotapiModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -139,10 +140,20 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
     return options;
   }
 
+  @ReactMethod
+  public void closeKnotSDK() {
+    if (product.equals("subscription_manager")) {
+      subscriptionManager.closeSubscriptionManager();
+    } else {
+      cardOnFileSwitcher.closeCardOnFileSwitcher();
+    }
+  }
+
   // Example method
   // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
   public void openCardSwitcher(ReadableMap params) {
+    product = "card_switcher";
     String entryPoint = params.getString("entryPoint");
     Configuration configuration = getConfiguration(params);
     Options options = getOptions(params);
@@ -157,6 +168,7 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void openSubscriptionManager(ReadableMap params) {
+    product = "subscription_manager";
     String entryPoint = params.getString("entryPoint");
     Configuration configuration = getConfiguration(params);
     Options options = getOptions(params);
