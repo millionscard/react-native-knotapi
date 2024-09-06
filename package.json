@@ -1,6 +1,6 @@
 {
   "name": "react-native-knotapi",
-  "version": "0.1.82",
+  "version": "0.1.83",
   "description": "Knot is for when there's knot an API - change card on file information, cancel subscriptions, change passwords, and more.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.cjs",
