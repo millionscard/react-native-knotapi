@@ -7,7 +7,7 @@ PODS:
   - hermes-engine (0.74.3):
     - hermes-engine/Pre-built (= 0.74.3)
   - hermes-engine/Pre-built (0.74.3)
-  - KnotAPI (0.7.3)
+  - KnotAPI (0.7.4)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -936,8 +936,8 @@ PODS:
   - React-Mapbuffer (0.74.3):
     - glog
     - React-debug
-  - react-native-knotapi (0.1.83):
-    - KnotAPI (= 0.7.3)
+  - react-native-knotapi (0.1.84):
+    - KnotAPI (= 0.7.4)
     - React-Core
   - React-nativeconfig (0.74.3)
   - React-NativeModulesApple (0.74.3):
