@@ -936,7 +936,7 @@ PODS:
   - React-Mapbuffer (0.74.3):
     - glog
     - React-debug
-  - react-native-knotapi (0.1.83):
+  - react-native-knotapi (0.1.84):
     - KnotAPI (= 0.7.3)
     - React-Core
   - React-nativeconfig (0.74.3)
