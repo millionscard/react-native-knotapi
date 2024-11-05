@@ -50,11 +50,12 @@ RCT_EXPORT_METHOD(openCardSwitcher:(NSDictionary *)params){
           [strongSelf sendEventWithName:@"CardSwitcher-onSuccess" body:@{@"merchant": merchant}];
       };
 
-      self.cardOnFileSwitcherSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId) {
+      self.cardOnFileSwitcherSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId, NSNumber * _Nullable sendCard) {
           NSMutableDictionary *body = [@{@"event": event, @"merchant": message} mutableCopy];
            if (taskId != nil) {
                body[@"taskId"] = taskId;
            }
+          body[@"sendCard"] = sendCard != nil ? sendCard : @NO;
           Knotapi * strongSelf = weakSelf;
           [strongSelf sendEventWithName:@"CardSwitcher-onEvent" body:body];
       };
@@ -109,7 +110,7 @@ RCT_EXPORT_METHOD(openSubscriptionManager:(NSDictionary *)params){
           [strongSelf sendEventWithName:@"SubscriptionManager-onSuccess" body:@{@"merchant": merchant}];
       };
 
-      self.subscriptionManagerSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId) {
+      self.subscriptionManagerSession.onEvent = ^(NSString * event, NSString * message, NSString * _Nullable taskId, NSNumber * _Nullable sendCard) {
           NSMutableDictionary *body = [@{@"event": event, @"merchant": message} mutableCopy];
            if (taskId != nil) {
                body[@"taskId"] = taskId;
