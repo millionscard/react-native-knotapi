@@ -938,6 +938,8 @@ PODS:
     - React-debug
   - react-native-knotapi (0.1.86):
     - KnotAPI (= 0.7.6)
+  - react-native-knotapi (0.1.85):
+    - KnotAPI (= 0.7.5)
     - React-Core
   - React-nativeconfig (0.74.3)
   - React-NativeModulesApple (0.74.3):
