@@ -7,7 +7,7 @@ PODS:
   - hermes-engine (0.74.3):
     - hermes-engine/Pre-built (= 0.74.3)
   - hermes-engine/Pre-built (0.74.3)
-  - KnotAPI (0.7.4)
+  - KnotAPI (0.7.7)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -937,7 +937,7 @@ PODS:
     - glog
     - React-debug
   - react-native-knotapi (0.1.84):
-    - KnotAPI (= 0.7.4)
+    - KnotAPI (= 0.7.7)
     - React-Core
   - React-nativeconfig (0.74.3)
   - React-NativeModulesApple (0.74.3):
@@ -1231,7 +1231,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - KnotAPI
     - SocketRocket
 
@@ -1355,7 +1355,7 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   hermes-engine: 1f547997900dd0752dc0cc0ae6dd16173c49e09b
-  KnotAPI: 441521802cb33a220d99c3cfa09d8e52c0ef399b
+  KnotAPI: b72ad9cea100095ad5273185dd8d2d92289a6a79
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
   RCTDeprecation: 4c7eeb42be0b2e95195563c49be08d0b839d22b4
   RCTRequired: d530a0f489699c8500e944fde963102c42dcd0c2
@@ -1380,7 +1380,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 6b3c8c98313642140530f93c46f5a6ca4530b446
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 9f68550e7c6839d01411ac8896aea5c868eff63a
-  react-native-knotapi: b779b4f2d40229330395253b0acafcee6836e331
+  react-native-knotapi: 729d6f7c7014b0d2c59baa91a2ba3f243839c085
   React-nativeconfig: fa5de9d8f4dbd5917358f8ad3ad1e08762f01dcb
   React-NativeModulesApple: 585d1b78e0597de364d259cb56007052d0bda5e5
   React-perflogger: 7bb9ba49435ff66b666e7966ee10082508a203e8
@@ -1407,6 +1407,6 @@ SPEC CHECKSUMS:
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 
-PODFILE CHECKSUM: 2e3999095750e2f260a05e8bd046e9ba06a87b91
+PODFILE CHECKSUM: e4b3a2dfe57919242c534f898ad220d3ca14f024
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
