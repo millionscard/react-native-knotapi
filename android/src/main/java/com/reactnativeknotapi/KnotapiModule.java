@@ -71,13 +71,14 @@ public class KnotapiModule extends ReactContextBaseJavaModule {
       }
 
       @Override
-      public void onEvent(String eventName, String merchantName, String taskId) {
+      public void onEvent(String eventName, String merchantName, String taskId, Boolean sendCard) {
         WritableMap params = Arguments.createMap();
         params.putString("event", eventName);
         params.putString("merchant", merchantName);
         if (taskId != null && !taskId.trim().isEmpty()) {
            params.putString("taskId", taskId);
         }
+        params.putBoolean("sendCard", sendCard != null ? sendCard : false);
         sendEvent(getReactApplicationContext(), prefix + "onEvent", params);
       }
     };
