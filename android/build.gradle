@@ -87,6 +87,12 @@ dependencies {
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
-  implementation "com.knotapi.cardonfileswitcher:knotapi-android-sdk:1.0.76"
+  implementation "com.knotapi.cardonfileswitcher:knotapi-android-sdk:1.0.77"
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+        force 'com.fasterxml.jackson.module:jackson-module-kotlin:2.14.0'
+    }
+}
