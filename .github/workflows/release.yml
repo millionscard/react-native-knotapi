@@ -7,7 +7,7 @@ permissions:
   id-token: write
   contents: read
   issues: write
-  pull-requests: write 
+  pull-requests: write
 jobs:
   release:
     if: startsWith(github.ref, 'refs/tags/')
@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 0
-      
+
     - name: Build Changelog
       id: generatechangelog
       uses: mikepenz/release-changelog-builder-action@v3.6.0
@@ -26,7 +26,7 @@ jobs:
         ignorePreReleases: "true"
       env:
         GITHUB_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-    
+
     - name: Make release
       id: release
       uses: softprops/action-gh-release@master
@@ -36,3 +36,22 @@ jobs:
         body: ${{ steps.generatechangelog.outputs.changelog }}
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN_WRITE }}
+
+    - name: Add Chart Annotation
+      env:
+        AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+        AMPLITUDE_SECRET_KEY: ${{ secrets.AMPLITUDE_SECRET_KEY }}
+        GITHUB_REF_NAME: ${{ github.ref_name }}
+      run: |
+        ENCODED_CREDENTIALS=$(echo -n "${AMPLITUDE_API_KEY}:${AMPLITUDE_SECRET_KEY}" | base64 | tr -d '\n')
+
+        curl --http1.1 -X POST "https://amplitude.com/api/2/annotations" \
+        -H "Authorization: Basic $ENCODED_CREDENTIALS" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "app_id": 617088,
+          "date": "'$(date +%Y-%m-%d)'",
+          "label": "Release: RN SDK '"$GITHUB_REF_NAME"'",
+          "chart_id": null,
+          "details": null
+        }'
