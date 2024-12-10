@@ -51,7 +51,7 @@ jobs:
         -d '{
           "app_id": 617088,
           "date": "'$(date +%Y-%m-%d)'",
-          "label": "Release: RN SDK '"$GITHUB_REF_NAME"'",
+          "label": "Released RN SDK '"$GITHUB_REF_NAME"'",
           "chart_id": null,
           "details": null
         }'
