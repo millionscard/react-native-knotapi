@@ -41,6 +41,17 @@ type CommonConfig = {
   useSearch?: boolean;
   entryPoint?: string;
 };
+
+type ErrorCallback = (errorCode: string, message: string) => void;
+type EventCallback = (
+  event: string,
+  merchant: string,
+  payload?: Record<string, unknown>,
+  taskId?: string
+) => void;
+type SuccessCallback = (merchant: string) => void;
+type ExitCallback = () => void;
+
 export const openCardOnFileSwitcher = (params: CommonConfig) => {
   InteractionManager.runAfterInteractions(() => {
     setTimeout(() => {
@@ -64,13 +75,17 @@ export const openSubscriptionManager = (params: CommonConfig) => {
 type EventNames = keyof typeof eventNames;
 export const addSubscriptionManagerListener = (
   eventName: EventNames,
-  callback: (event: any) => void
+  callback: (
+    event: EventCallback | SuccessCallback | ErrorCallback | ExitCallback
+  ) => void
 ) => {
   return eventEmitter.addListener(`SubscriptionManager-${eventName}`, callback);
 };
 export const addCardSwitcherListener = (
   eventName: EventNames,
-  callback: (event: any) => void
+  callback: (
+    event: EventCallback | SuccessCallback | ErrorCallback | ExitCallback
+  ) => void
 ) => {
   return eventEmitter.addListener(`CardSwitcher-${eventName}`, callback);
 };
