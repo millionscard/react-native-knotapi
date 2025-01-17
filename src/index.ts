@@ -22,13 +22,6 @@ const Knotapi = NativeModules.Knotapi
       }
     );
 
-export const eventNames = {
-  onSuccess: 'onSuccess',
-  onError: 'onError',
-  onEvent: 'onEvent',
-  onExit: 'onExit',
-} as const;
-
 const eventEmitter = new NativeEventEmitter(Knotapi);
 
 type CommonConfig = {
@@ -72,7 +65,22 @@ export const openSubscriptionManager = (params: CommonConfig) => {
   });
 };
 
-type EventNames = keyof typeof eventNames;
+type EventTypes = {
+  onSuccess: SuccessCallback;
+  onError: ErrorCallback;
+  onEvent: EventCallback;
+  onExit: ExitCallback;
+};
+
+type EventNames = keyof EventTypes;
+
+export const eventNames: { [K in EventNames]: K } = {
+  onSuccess: 'onSuccess',
+  onError: 'onError',
+  onEvent: 'onEvent',
+  onExit: 'onExit',
+};
+
 export const addSubscriptionManagerListener = (
   eventName: EventNames,
   callback: (
@@ -81,11 +89,9 @@ export const addSubscriptionManagerListener = (
 ) => {
   return eventEmitter.addListener(`SubscriptionManager-${eventName}`, callback);
 };
-export const addCardSwitcherListener = (
-  eventName: EventNames,
-  callback: (
-    event: EventCallback | SuccessCallback | ErrorCallback | ExitCallback
-  ) => void
+export const addCardSwitcherListener = <T extends keyof EventTypes>(
+  eventName: T,
+  callback: (event: EventTypes[T]) => void
 ) => {
   return eventEmitter.addListener(`CardSwitcher-${eventName}`, callback);
 };
