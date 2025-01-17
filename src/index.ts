@@ -72,20 +72,9 @@ type EventTypes = {
   onExit: ExitCallback;
 };
 
-type EventNames = keyof EventTypes;
-
-export const eventNames: { [K in EventNames]: K } = {
-  onSuccess: 'onSuccess',
-  onError: 'onError',
-  onEvent: 'onEvent',
-  onExit: 'onExit',
-};
-
-export const addSubscriptionManagerListener = (
-  eventName: EventNames,
-  callback: (
-    event: EventCallback | SuccessCallback | ErrorCallback | ExitCallback
-  ) => void
+export const addSubscriptionManagerListener = <T extends keyof EventTypes>(
+  eventName: T,
+  callback: (event: EventTypes[T]) => void
 ) => {
   return eventEmitter.addListener(`SubscriptionManager-${eventName}`, callback);
 };
