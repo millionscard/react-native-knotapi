@@ -89,10 +89,3 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation "com.knotapi.cardonfileswitcher:knotapi-android-sdk:1.0.79"
 }
-
-configurations.all {
-    resolutionStrategy {
-        force 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-        force 'com.fasterxml.jackson.module:jackson-module-kotlin:2.14.0'
-    }
-}
